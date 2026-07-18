@@ -63,7 +63,6 @@ sensor:
             format: "%.0f%%"
             args: [ 'x' ]
 
-sensor:
 
   # ===========================================================================
   # SENSOR: Office Temperature (Indoor)
