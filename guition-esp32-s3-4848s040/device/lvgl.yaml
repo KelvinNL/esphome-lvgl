@@ -76,7 +76,7 @@ lvgl:
                   text_font: $icon_font
                   align: center
                   y: -20
-                  text: $lightbulb
+                  text: $sofa
               - label:
                   align: bottom_left
                   text: "Woonkamer"
@@ -99,7 +99,7 @@ lvgl:
                   text_font: $icon_font
                   align: center
                   y: -20
-                  text: $lightbulb
+                  text: $bed
               - label:
                   align: bottom_left
                   text: "Slaapkamer"
@@ -122,7 +122,7 @@ lvgl:
                   text_font: $icon_font
                   align: center
                   y: -20
-                  text: $lightbulb
+                  text: $desktop_tower_monitor
               - label:
                   align: bottom_left
                   text: "Computerkamer"
@@ -146,7 +146,7 @@ lvgl:
                   text_font: $icon_font
                   align: center
                   y: -20
-                  text: $lightbulb
+                  text: $lightbulb_group_off
               - label:
                   align: bottom_left
                   text: "Uit"
@@ -169,7 +169,7 @@ lvgl:
                   text_font: $icon_font
                   align: center
                   y: -20
-                  text: $lightbulb
+                  text: $lightbulb_group_off
               - label:
                   align: bottom_left
                   text: "Uit"
@@ -192,7 +192,7 @@ lvgl:
                   text_font: $icon_font
                   align: center
                   y: -20
-                  text: $lightbulb
+                  text: $lightbulb_group_off
               - label:
                   align: bottom_left
                   text: "Uit"
