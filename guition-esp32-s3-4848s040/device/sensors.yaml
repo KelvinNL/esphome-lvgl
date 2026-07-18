@@ -1,10 +1,14 @@
 # =============================================================================
-# SENSORS - Woonkamer Dashboard (custom, built for Kelvin's own entities)
+# SENSORS - Woonkamer Dashboard (custom, page 1)
 # =============================================================================
-# Pattern: each sensor "watches" a Home Assistant entity. When it changes,
-# it updates a widget in lvgl_woonkamer.yaml (a label's text, or a button's
-# "checked" highlight state). This file only READS from Home Assistant.
-# Sending commands (button presses) happens in lvgl_woonkamer.yaml.
+# Scenes have no on/off state in Home Assistant, so each "on" scene button's
+# "checked" highlight is driven by a representative light in that room
+# instead - the same trick as a Lovelace template card checking
+# is_state('light.x', 'on') to color a scene tile.
+#
+# Only the "on scene" and ambient/TV buttons highlight when their proxy
+# light is on. The "Lampen Uit" buttons are plain tap buttons - they don't
+# change color.
 # =============================================================================
 
 sensor:
@@ -19,17 +23,6 @@ sensor:
           id: weather_temp_label
           text:
             format: "%.0f°"
-            args: [ 'x' ]
-
-  # 3D printer progress percentage
-  - platform: homeassistant
-    entity_id: sensor.a1mini_0309da532001059_printvoortgang
-    id: printer_progress
-    on_value:
-      - lvgl.label.update:
-          id: printer_progress_label
-          text:
-            format: "%.0f%%"
             args: [ 'x' ]
 
 
@@ -48,89 +41,77 @@ text_sensor:
 binary_sensor:
 
   # ---------------------------------------------------------------------
-  # LIGHTS - each watches a light entity and highlights its button when on
+  # WOONKAMER - Standaard kleur highlights when the room's lights are on
+  # Proxy: light.staande_lamp
   # ---------------------------------------------------------------------
   - platform: homeassistant
-    id: bank_lamp_state
-    entity_id: light.bank_lamp
-    trigger_on_initial_state: true
-    on_state:
-      then:
-        lvgl.widget.update:
-          id: bank_lamp_button
-          state:
-            checked: !lambda return x;
-
-  - platform: homeassistant
-    id: dressoir_lamp_state
-    entity_id: light.dressoir_lamp
-    trigger_on_initial_state: true
-    on_state:
-      then:
-        lvgl.widget.update:
-          id: dressoir_lamp_button
-          state:
-            checked: !lambda return x;
-
-  - platform: homeassistant
-    id: grote_bol_state
-    entity_id: light.grote_bol
-    trigger_on_initial_state: true
-    on_state:
-      then:
-        lvgl.widget.update:
-          id: grote_bol_button
-          state:
-            checked: !lambda return x;
-
-  - platform: homeassistant
-    id: kleine_bol_state
-    entity_id: light.kleine_bol
-    trigger_on_initial_state: true
-    on_state:
-      then:
-        lvgl.widget.update:
-          id: kleine_bol_button
-          state:
-            checked: !lambda return x;
-
-  - platform: homeassistant
-    id: staande_lamp_state
+    id: woonkamer_light_state
     entity_id: light.staande_lamp
     trigger_on_initial_state: true
     on_state:
       then:
         lvgl.widget.update:
-          id: staande_lamp_button
+          id: woonkamer_scene_on_button
           state:
             checked: !lambda return x;
 
+  # ---------------------------------------------------------------------
+  # SLAAPKAMER - Standaard lampen highlights when the room's lights are on
+  # Proxy: light.bedlamp_kel
+  # ---------------------------------------------------------------------
   - platform: homeassistant
-    id: tv_light_bar_state
+    id: slaapkamer_light_state
+    entity_id: light.bedlamp_kel
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: slaapkamer_scene_on_button
+          state:
+            checked: !lambda return x;
+
+  # ---------------------------------------------------------------------
+  # COMPUTERKAMER - Lampen Computerkamer highlights when the room's
+  # lights are on. Proxy: light.393d0976_8033_4897_a389_633158737c15_1
+  # (Plank Lamp)
+  # ---------------------------------------------------------------------
+  - platform: homeassistant
+    id: computerkamer_light_state
+    entity_id: light.393d0976_8033_4897_a389_633158737c15_1
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: computerkamer_scene_on_button
+          state:
+            checked: !lambda return x;
+
+  # ---------------------------------------------------------------------
+  # TV KIJKEN (Woonkamer) - single button, no "off" counterpart
+  # Proxy: light.tv_light_bar
+  # ---------------------------------------------------------------------
+  - platform: homeassistant
+    id: tv_ambient_light_state
     entity_id: light.tv_light_bar
     trigger_on_initial_state: true
     on_state:
       then:
         lvgl.widget.update:
-          id: tv_light_bar_button
+          id: tv_ambient_button
           state:
             checked: !lambda return x;
 
   # ---------------------------------------------------------------------
-  # 3D PRINTER SOCKET - highlights the printer button when the smart
-  # plug powering the printer is on
+  # TV KIJKEN IN BED (Slaapkamer) - single button, no "off" counterpart
+  # Proxy: light.led_strip_bed
   # ---------------------------------------------------------------------
   - platform: homeassistant
-    id: printer_socket_state
-    entity_id: switch.bambulab_a1_mini_stopcontact_1
+    id: tv_bed_light_state
+    entity_id: light.led_strip_bed
     trigger_on_initial_state: true
     on_state:
       then:
         lvgl.widget.update:
-          id: printer_button
+          id: tv_bed_button
           state:
             checked: !lambda return x;
-
-  # NOTE: Scenes (scene.*) don't have an on/off state in Home Assistant -
-  # activating one is a one-shot action, so there's nothing to "watch" for
-  # the 4 scene buttons below. They're plain action buttons, not toggles.
