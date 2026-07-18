@@ -39,6 +39,31 @@
 # =============================================================================
 
 sensor:
+ 
+  # Outdoor temperature, from the weather entity's "temperature" attribute
+  - platform: homeassistant
+    entity_id: weather.forecast_thuis
+    attribute: temperature
+    id: weather_temperature
+    on_value:
+      - lvgl.label.update:
+          id: weather_temp_label
+          text:
+            format: "%.0f°"
+            args: [ 'x' ]
+ 
+  # 3D printer progress percentage
+  - platform: homeassistant
+    entity_id: sensor.a1mini_0309da532001059_printvoortgang
+    id: printer_progress
+    on_value:
+      - lvgl.label.update:
+          id: printer_progress_label
+          text:
+            format: "%.0f%%"
+            args: [ 'x' ]
+
+sensor:
 
   # ===========================================================================
   # SENSOR: Office Temperature (Indoor)
