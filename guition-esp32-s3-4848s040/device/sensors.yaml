@@ -13,6 +13,17 @@
 
 sensor:
 
+  # Indoor temperature (Woonkamer)
+  - platform: homeassistant
+    entity_id: sensor.sensor_woonkamer_temperature
+    id: woonkamer_temperature
+    on_value:
+      - lvgl.label.update:
+          id: temperatures_label
+          text:
+            format: "%.1f° / %.1f°"
+            args: [ 'x', 'id(weather_temperature).state' ]
+
   # Outdoor temperature, from the weather entity's "temperature" attribute
   - platform: homeassistant
     entity_id: weather.forecast_thuis
@@ -20,22 +31,10 @@ sensor:
     id: weather_temperature
     on_value:
       - lvgl.label.update:
-          id: weather_temp_label
+          id: temperatures_label
           text:
-            format: "%.0f°"
-            args: [ 'x' ]
-
-
-text_sensor:
-
-  # Weather condition text, e.g. "partlycloudy", "rainy"
-  - platform: homeassistant
-    entity_id: weather.forecast_thuis
-    id: weather_condition
-    on_value:
-      - lvgl.label.update:
-          id: weather_condition_label
-          text: !lambda return x.c_str();
+            format: "%.1f° / %.1f°"
+            args: [ 'id(woonkamer_temperature).state', 'x' ]
 
 
 binary_sensor:
