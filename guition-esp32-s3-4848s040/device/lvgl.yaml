@@ -38,7 +38,7 @@ lvgl:
       #   sensors.yaml file triggers an update to this label's text.
       # =========================================================================
       - label:
-          text: "sensor.sensor_woonkamer_temperature° / sensor.sensor_balkon_temperature°"
+          text: "test° / weather.forecast_thuis°"
           id: temperatures
           styles: roboto15_style
           align: top_left
