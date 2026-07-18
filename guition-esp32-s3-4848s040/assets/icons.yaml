@@ -4,7 +4,7 @@
 font:
   - file: 'https://github.com/Templarian/MaterialDesign-Webfont/raw/v7.4.47/fonts/materialdesignicons-webfont.ttf'
     id: icon_font
-    size: 40
+    size: 60
     bpp: 4
     glyphs: [
       "\U000F0335",  # mdi-lightbulb
@@ -27,6 +27,10 @@ font:
       "\U000F0317",  # mdi-lan
       "\U000F0425",  # mdi-power
       "\U000F050F",  # mdi-thermometer
+      "\U000F04B9",  # mdi-sofa
+      "\U000F02E3",  # mdi-bed
+      "\U000F0AAB",  # mdi-desktop-tower-monitor
+      "\U000F12CD",  # mdi-lightbulb-group-off
       ]
   - file: 'https://github.com/Templarian/MaterialDesign-Webfont/raw/v7.4.47/fonts/materialdesignicons-webfont.ttf'
     id: icon_font_small
@@ -59,3 +63,7 @@ substitutions:
   lan:            "\U000F0317"
   power:          "\U000F0425"
   thermometer:    "\U000F050F"
+  sofa:           "\U000F04B9"
+  bed:            "\U000F02E3"
+  desktop_tower_monitor: "\U000F0AAB"
+  lightbulb_group_off:   "\U000F12CD"
