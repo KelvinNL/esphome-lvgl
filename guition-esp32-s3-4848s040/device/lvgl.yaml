@@ -74,7 +74,8 @@ lvgl:
             widgets:
               - label:
                   text_font: $icon_font
-                  align: top_left
+                  align: center
+                  y: -20
                   text: $lightbulb
               - label:
                   align: bottom_left
@@ -96,7 +97,8 @@ lvgl:
             widgets:
               - label:
                   text_font: $icon_font
-                  align: top_left
+                  align: center
+                  y: -20
                   text: $lightbulb
               - label:
                   align: bottom_left
@@ -118,7 +120,8 @@ lvgl:
             widgets:
               - label:
                   text_font: $icon_font
-                  align: top_left
+                  align: center
+                  y: -20
                   text: $lightbulb
               - label:
                   align: bottom_left
@@ -141,7 +144,8 @@ lvgl:
             widgets:
               - label:
                   text_font: $icon_font
-                  align: top_left
+                  align: center
+                  y: -20
                   text: $lightbulb
               - label:
                   align: bottom_left
@@ -163,7 +167,8 @@ lvgl:
             widgets:
               - label:
                   text_font: $icon_font
-                  align: top_left
+                  align: center
+                  y: -20
                   text: $lightbulb
               - label:
                   align: bottom_left
@@ -185,7 +190,8 @@ lvgl:
             widgets:
               - label:
                   text_font: $icon_font
-                  align: top_left
+                  align: center
+                  y: -20
                   text: $lightbulb
               - label:
                   align: bottom_left
@@ -208,7 +214,8 @@ lvgl:
             widgets:
               - label:
                   text_font: $icon_font
-                  align: top_left
+                  align: center
+                  y: -20
                   text: $ledstrip
               - label:
                   align: bottom_left
@@ -230,7 +237,8 @@ lvgl:
             widgets:
               - label:
                   text_font: $icon_font
-                  align: top_left
+                  align: center
+                  y: -20
                   text: $ledstrip
               - label:
                   align: bottom_left
@@ -260,7 +268,7 @@ lvgl:
                   time: 50ms
 
     # ===================================================================
-    # PAGE 2: extras - placeholder, to be filled in next
+    # PAGE 2: extras - 3D printer status
     # ===================================================================
     - id: extras_page
       layout:
@@ -295,3 +303,78 @@ lvgl:
                   id: main_page
                   animation: NONE
                   time: 50ms
+
+        - button:
+            height: $button_height_single
+            width: $button_width
+            checkable: true
+            id: printer_button
+            styles: control
+            grid_cell_column_pos: 1
+            grid_cell_row_pos: 0
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $printer
+              - label:
+                  align: top_right
+                  id: printer_progress_label
+                  text: "--%"
+              - label:
+                  align: bottom_left
+                  text: "Printer"
+            on_press:
+              - homeassistant.service:
+                  service: switch.toggle
+                  data:
+                    entity_id: switch.bambulab_a1_mini_stopcontact_1
+
+        - button:
+            height: $button_height_single
+            width: $button_width
+            clickable: false
+            styles: webhook
+            grid_cell_column_pos: 2
+            grid_cell_row_pos: 0
+            widgets:
+              - label:
+                  align: top_left
+                  text: "Status"
+              - label:
+                  align: bottom_left
+                  id: printer_status_label
+                  text: "--"
+
+        - button:
+            height: $button_height_single
+            width: $button_width
+            clickable: false
+            styles: webhook
+            grid_cell_column_pos: 0
+            grid_cell_row_pos: 1
+            widgets:
+              - label:
+                  align: top_left
+                  text: "Job"
+              - label:
+                  align: bottom_left
+                  id: printer_job_label
+                  text: "--"
+
+        - button:
+            height: $button_height_single
+            width: $button_width
+            clickable: false
+            styles: webhook
+            grid_cell_column_pos: 1
+            grid_cell_row_pos: 1
+            widgets:
+              - label:
+                  align: top_left
+                  text: "Remaining"
+              - label:
+                  align: bottom_left
+                  id: printer_remaining_label
+                  text: "--"
