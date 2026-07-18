@@ -1,7 +1,12 @@
 # =============================================================================
-# LVGL TOUCHSCREEN INTERFACE - Woonkamer Dashboard (custom)
+# LVGL TOUCHSCREEN INTERFACE - Woonkamer Dashboard (custom, page 1)
 # =============================================================================
-# 3x4 grid: 6 light toggles, 4 scene buttons, 1 printer toggle, 1 spare cell.
+# Page 1 (main_page): 3x3 grid
+#   Row 0: Standaard-scene buttons (Woonkamer / Slaapkamer / Computerkamer)
+#          - highlight (checkable) when their proxy light is ON
+#   Row 1: matching "Lampen Uit" buttons - plain tap, no highlight
+#   Row 2: Ambient TV kijken (highlight) | TV kijken in bed (highlight) | More
+# Page 2 (extras_page): placeholder for now - just a Back button.
 # Top layer: clock + outdoor weather (visible on every page).
 # =============================================================================
 
@@ -46,11 +51,15 @@ lvgl:
           text_color: 0xFFFFFF
 
   pages:
+
+    # ===================================================================
+    # PAGE 1: main
+    # ===================================================================
     - id: main_page
       layout:
         type: grid
         grid_columns: [fr(1), fr(1), fr(1)]
-        grid_rows: [fr(1), fr(1), fr(1), fr(1)]
+        grid_rows: [fr(1), fr(1), fr(1)]
       scrollbar_mode: "off"
       width: 100%
       bg_color: Black
@@ -62,12 +71,12 @@ lvgl:
 
       widgets:
 
-        # ------------------- ROW 0: lights ------------------------------
+        # ------------------- ROW 0: "on" scene buttons --------------------
         - button:
             height: $button_height_single
             width: $button_width
             checkable: true
-            id: bank_lamp_button
+            id: woonkamer_scene_on_button
             styles: control
             grid_cell_column_pos: 0
             grid_cell_row_pos: 0
@@ -78,202 +87,7 @@ lvgl:
                   text: $lightbulb
               - label:
                   align: bottom_left
-                  text: "Bank"
-            on_press:
-              - homeassistant.service:
-                  service: light.toggle
-                  data:
-                    entity_id: light.bank_lamp
-
-        - button:
-            height: $button_height_single
-            width: $button_width
-            checkable: true
-            id: dressoir_lamp_button
-            styles: control
-            grid_cell_column_pos: 1
-            grid_cell_row_pos: 0
-            widgets:
-              - label:
-                  text_font: $icon_font
-                  align: top_left
-                  text: $lightbulb
-              - label:
-                  align: bottom_left
-                  text: "Dressoir"
-            on_press:
-              - homeassistant.service:
-                  service: light.toggle
-                  data:
-                    entity_id: light.dressoir_lamp
-
-        - button:
-            height: $button_height_single
-            width: $button_width
-            checkable: true
-            id: grote_bol_button
-            styles: control
-            grid_cell_column_pos: 2
-            grid_cell_row_pos: 0
-            widgets:
-              - label:
-                  text_font: $icon_font
-                  align: top_left
-                  text: $lightbulb
-              - label:
-                  align: bottom_left
-                  text: "Grote Bol"
-            on_press:
-              - homeassistant.service:
-                  service: light.toggle
-                  data:
-                    entity_id: light.grote_bol
-
-        # ------------------- ROW 1: lights ------------------------------
-        - button:
-            height: $button_height_single
-            width: $button_width
-            checkable: true
-            id: kleine_bol_button
-            styles: control
-            grid_cell_column_pos: 0
-            grid_cell_row_pos: 1
-            widgets:
-              - label:
-                  text_font: $icon_font
-                  align: top_left
-                  text: $lightbulb
-              - label:
-                  align: bottom_left
-                  text: "Kleine Bol"
-            on_press:
-              - homeassistant.service:
-                  service: light.toggle
-                  data:
-                    entity_id: light.kleine_bol
-
-        - button:
-            height: $button_height_single
-            width: $button_width
-            checkable: true
-            id: staande_lamp_button
-            styles: control
-            grid_cell_column_pos: 1
-            grid_cell_row_pos: 1
-            widgets:
-              - label:
-                  text_font: $icon_font
-                  align: top_left
-                  text: $lightbulb
-              - label:
-                  align: bottom_left
-                  text: "Staande Lamp"
-            on_press:
-              - homeassistant.service:
-                  service: light.toggle
-                  data:
-                    entity_id: light.staande_lamp
-
-        - button:
-            height: $button_height_single
-            width: $button_width
-            checkable: true
-            id: tv_light_bar_button
-            styles: control
-            grid_cell_column_pos: 2
-            grid_cell_row_pos: 1
-            widgets:
-              - label:
-                  text_font: $icon_font
-                  align: top_left
-                  text: $ledstrip
-              - label:
-                  align: bottom_left
-                  text: "TV Bar"
-            on_press:
-              - homeassistant.service:
-                  service: light.toggle
-                  data:
-                    entity_id: light.tv_light_bar
-
-        # ------------------- ROW 2: scenes -------------------------------
-        # Scenes have no on/off state, so these are plain action buttons
-        # (not checkable) - pressing one just re-applies that scene.
-        - button:
-            height: $button_height_single
-            width: $button_width
-            styles: webhook
-            grid_cell_column_pos: 0
-            grid_cell_row_pos: 2
-            widgets:
-              - label:
-                  text_font: $icon_font
-                  align: top_left
-                  text: $ledstrip
-              - label:
-                  align: bottom_left
-                  text: "TV Paars"
-            on_press:
-              - homeassistant.service:
-                  service: scene.turn_on
-                  data:
-                    entity_id: scene.ambient_lighting_voor_tv_kijken
-
-        - button:
-            height: $button_height_single
-            width: $button_width
-            styles: webhook
-            grid_cell_column_pos: 1
-            grid_cell_row_pos: 2
-            widgets:
-              - label:
-                  text_font: $icon_font
-                  align: top_left
-                  text: $ledstrip
-              - label:
-                  align: bottom_left
-                  text: "TV Groen"
-            on_press:
-              - homeassistant.service:
-                  service: scene.turn_on
-                  data:
-                    entity_id: scene.ambient_lighting_voor_tv_kijken_groen
-
-        - button:
-            height: $button_height_single
-            width: $button_width
-            styles: webhook
-            grid_cell_column_pos: 2
-            grid_cell_row_pos: 2
-            widgets:
-              - label:
-                  text_font: $icon_font
-                  align: top_left
-                  text: $lightbulb
-              - label:
-                  align: bottom_left
-                  text: "Lampen Uit"
-            on_press:
-              - homeassistant.service:
-                  service: scene.turn_on
-                  data:
-                    entity_id: scene.lampen_woonkamer_uit
-
-        # ------------------- ROW 3: scene + printer -----------------------
-        - button:
-            height: $button_height_single
-            width: $button_width
-            styles: webhook
-            grid_cell_column_pos: 0
-            grid_cell_row_pos: 3
-            widgets:
-              - label:
-                  text_font: $icon_font
-                  align: top_left
-                  text: $lightbulb
-              - label:
-                  align: bottom_left
-                  text: "Standaard"
+                  text: "Woonkamer"
             on_press:
               - homeassistant.service:
                   service: scene.turn_on
@@ -284,26 +98,209 @@ lvgl:
             height: $button_height_single
             width: $button_width
             checkable: true
-            id: printer_button
+            id: slaapkamer_scene_on_button
             styles: control
             grid_cell_column_pos: 1
-            grid_cell_row_pos: 3
+            grid_cell_row_pos: 0
             widgets:
               - label:
                   text_font: $icon_font
                   align: top_left
-                  text: $printer
-              - label:
-                  align: top_right
-                  id: printer_progress_label
-                  text: "--%"
+                  text: $lightbulb
               - label:
                   align: bottom_left
-                  text: "Printer"
+                  text: "Slaapkamer"
             on_press:
               - homeassistant.service:
-                  service: switch.toggle
+                  service: scene.turn_on
                   data:
-                    entity_id: switch.bambulab_a1_mini_stopcontact_1
+                    entity_id: scene.standaard_lampen_slaapkamer
 
-        # Cell (2, 3) intentionally left empty - room for a 12th button
+        - button:
+            height: $button_height_single
+            width: $button_width
+            checkable: true
+            id: computerkamer_scene_on_button
+            styles: control
+            grid_cell_column_pos: 2
+            grid_cell_row_pos: 0
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: top_left
+                  text: $lightbulb
+              - label:
+                  align: bottom_left
+                  text: "Computerkamer"
+            on_press:
+              - homeassistant.service:
+                  service: scene.turn_on
+                  data:
+                    entity_id: scene.lampen_computerkamer
+
+        # ------------------- ROW 1: "off" scene buttons - plain -----------
+        - button:
+            height: $button_height_single
+            width: $button_width
+            checkable: false
+            id: woonkamer_scene_off_button
+            styles: webhook
+            grid_cell_column_pos: 0
+            grid_cell_row_pos: 1
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: top_left
+                  text: $lightbulb
+              - label:
+                  align: bottom_left
+                  text: "Uit"
+            on_press:
+              - homeassistant.service:
+                  service: scene.turn_on
+                  data:
+                    entity_id: scene.lampen_woonkamer_uit
+
+        - button:
+            height: $button_height_single
+            width: $button_width
+            checkable: false
+            id: slaapkamer_scene_off_button
+            styles: webhook
+            grid_cell_column_pos: 1
+            grid_cell_row_pos: 1
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: top_left
+                  text: $lightbulb
+              - label:
+                  align: bottom_left
+                  text: "Uit"
+            on_press:
+              - homeassistant.service:
+                  service: scene.turn_on
+                  data:
+                    entity_id: scene.lampen_slaapkamer_uit
+
+        - button:
+            height: $button_height_single
+            width: $button_width
+            checkable: false
+            id: computerkamer_scene_off_button
+            styles: webhook
+            grid_cell_column_pos: 2
+            grid_cell_row_pos: 1
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: top_left
+                  text: $lightbulb
+              - label:
+                  align: bottom_left
+                  text: "Uit"
+            on_press:
+              - homeassistant.service:
+                  service: scene.turn_on
+                  data:
+                    entity_id: scene.lampen_computerkamer_uit
+
+        # ------------------- ROW 2: TV scenes + More -----------------------
+        - button:
+            height: $button_height_single
+            width: $button_width
+            checkable: true
+            id: tv_ambient_button
+            styles: control
+            grid_cell_column_pos: 0
+            grid_cell_row_pos: 2
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: top_left
+                  text: $ledstrip
+              - label:
+                  align: bottom_left
+                  text: "TV kijken"
+            on_press:
+              - homeassistant.service:
+                  service: scene.turn_on
+                  data:
+                    entity_id: scene.ambient_lighting_voor_tv_kijken
+
+        - button:
+            height: $button_height_single
+            width: $button_width
+            checkable: true
+            id: tv_bed_button
+            styles: control
+            grid_cell_column_pos: 1
+            grid_cell_row_pos: 2
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: top_left
+                  text: $ledstrip
+              - label:
+                  align: bottom_left
+                  text: "TV in bed"
+            on_press:
+              - homeassistant.service:
+                  service: scene.turn_on
+                  data:
+                    entity_id: scene.tv_kijken_in_bed
+
+        - button:
+            height: $button_height_single
+            width: $button_width
+            checkable: false
+            id: more_nav_button
+            styles: control
+            grid_cell_column_pos: 2
+            grid_cell_row_pos: 2
+            widgets:
+              - label:
+                  align: center
+                  text: "More >"
+            on_click:
+              - lvgl.page.show:
+                  id: extras_page
+                  animation: NONE
+                  time: 50ms
+
+    # ===================================================================
+    # PAGE 2: extras - placeholder, to be filled in next
+    # ===================================================================
+    - id: extras_page
+      layout:
+        type: grid
+        grid_columns: [fr(1), fr(1), fr(1)]
+        grid_rows: [fr(1), fr(1), fr(1)]
+      scrollbar_mode: "off"
+      width: 100%
+      bg_color: Black
+      bg_opa: cover
+      pad_top: 34
+      pad_bottom: 5
+      pad_left: 5
+      pad_right: 5
+
+      widgets:
+
+        - button:
+            height: $button_height_single
+            width: $button_width
+            checkable: false
+            id: extras_back_button
+            styles: control
+            grid_cell_column_pos: 0
+            grid_cell_row_pos: 0
+            widgets:
+              - label:
+                  align: center
+                  text: "< Back"
+            on_click:
+              - lvgl.page.show:
+                  id: main_page
+                  animation: NONE
+                  time: 50ms
