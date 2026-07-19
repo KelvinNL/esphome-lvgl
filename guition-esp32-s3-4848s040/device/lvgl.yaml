@@ -12,6 +12,15 @@
 
 lvgl:
   buffer_size: 100%
+  on_idle:
+    timeout: 10min
+    then:
+      - light.turn_off: backlight
+      - lvgl.pause:
+          show_snow: false
+      - globals.set:
+          id: screen_asleep
+          value: 'true'
   top_layer:
     widgets:
 
