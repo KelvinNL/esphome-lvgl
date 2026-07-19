@@ -36,6 +36,71 @@ sensor:
             format: "%.1f° / %.1f°"
             args: [ 'id(woonkamer_temperature).state', 'x' ]
 
+  # --- 3D printer (page 2) - the A1 (03919D533008224), not the offline A1 Mini ---
+  - platform: homeassistant
+    entity_id: sensor.a1_03919d533008224_printvoortgang
+    id: printer_progress
+    on_value:
+      - lvgl.label.update:
+          id: printer_progress_label
+          text:
+            format: "%.0f%%"
+            args: [ 'x' ]
+
+
+  # --- 3D printer remaining time (page 2) - sensor reports decimal HOURS,
+  # split into whole hours + minutes for display ---
+  - platform: homeassistant
+    entity_id: sensor.a1_03919d533008224_resterende_tijd
+    id: printer_remaining
+    on_value:
+      - lvgl.label.update:
+          id: printer_remaining_label
+          text:
+            format: "%dh %02dm"
+            args: [ '(int)x', '(int)round((x - (int)x) * 60)' ]
+
+
+text_sensor:
+
+  # --- 3D printer status text (page 2) - the A1 (03919D533008224) ---
+  - platform: homeassistant
+    entity_id: sensor.a1_03919d533008224_printstatus
+    id: printer_status
+    on_value:
+      - lvgl.label.update:
+          id: printer_status_label
+          text: !lambda return x.c_str();
+
+  # --- 3D printer job name (page 2) - the A1 (03919D533008224) ---
+  - platform: homeassistant
+    entity_id: sensor.a1_03919d533008224_taaknaam
+    id: printer_job_name
+    on_value:
+      - lvgl.label.update:
+          id: printer_job_label
+          text: !lambda return x.c_str();
+
+  # --- 3D printer estimated finish time (page 2) ---
+  # Sensor reports a UTC ISO8601 timestamp, e.g. "2026-07-19T12:22:00+00:00".
+  # We parse out HH:MM and shift +2h for Amsterdam summer time (CEST).
+  # NOTE: switch this to +1 once the Netherlands moves to winter time (CET).
+  - platform: homeassistant
+    entity_id: sensor.a1_03919d533008224_eindtijd
+    id: printer_finish_time
+    on_value:
+      - lvgl.label.update:
+          id: printer_finish_label
+          text: !lambda |-
+            std::string iso = x;
+            if (iso.length() < 16) return std::string("--:--");
+            int hour = atoi(iso.substr(11, 2).c_str());
+            int minute = atoi(iso.substr(14, 2).c_str());
+            hour = (hour + 2) % 24;
+            char buf[8];
+            snprintf(buf, sizeof(buf), "%02d:%02d", hour, minute);
+            return std::string(buf);
+
 
 binary_sensor:
 
@@ -112,5 +177,19 @@ binary_sensor:
       then:
         lvgl.widget.update:
           id: tv_bed_button
+          state:
+            checked: !lambda return x;
+
+  # ---------------------------------------------------------------------
+  # 3D PRINTER SOCKET (page 2) - highlights when the smart plug is on
+  # ---------------------------------------------------------------------
+  - platform: homeassistant
+    id: printer_socket_state
+    entity_id: switch.bambulab_a1_mini_stopcontact_1
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: printer_button
           state:
             checked: !lambda return x;
