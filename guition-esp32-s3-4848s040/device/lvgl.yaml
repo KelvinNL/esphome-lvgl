@@ -89,6 +89,32 @@ lvgl:
               - label:
                   align: bottom_left
                   text: "Woonkamer"
+              - label:
+                  text_font: icon_font_small
+                  align: top_left
+                  x: 6
+                  y: 6
+                  text: $thermometer
+              - label:
+                  align: top_left
+                  x: 24
+                  y: 6
+                  id: woonkamer_temp_label
+                  styles: roboto15_style
+                  text: "--°"
+              - label:
+                  text_font: icon_font_small
+                  align: top_left
+                  x: 92
+                  y: 6
+                  text: $water_percent
+              - label:
+                  align: top_left
+                  x: 110
+                  y: 6
+                  id: woonkamer_humidity_label
+                  styles: roboto15_style
+                  text: "--%"
             on_press:
               - homeassistant.service:
                   service: scene.turn_on
@@ -112,6 +138,32 @@ lvgl:
               - label:
                   align: bottom_left
                   text: "Slaapkamer"
+              - label:
+                  text_font: icon_font_small
+                  align: top_left
+                  x: 6
+                  y: 6
+                  text: $thermometer
+              - label:
+                  align: top_left
+                  x: 24
+                  y: 6
+                  id: slaapkamer_temp_label
+                  styles: roboto15_style
+                  text: "--°"
+              - label:
+                  text_font: icon_font_small
+                  align: top_left
+                  x: 92
+                  y: 6
+                  text: $water_percent
+              - label:
+                  align: top_left
+                  x: 110
+                  y: 6
+                  id: slaapkamer_humidity_label
+                  styles: roboto15_style
+                  text: "--%"
             on_press:
               - homeassistant.service:
                   service: scene.turn_on
@@ -135,6 +187,32 @@ lvgl:
               - label:
                   align: bottom_left
                   text: "Computerkamer"
+              - label:
+                  text_font: icon_font_small
+                  align: top_left
+                  x: 6
+                  y: 6
+                  text: $thermometer
+              - label:
+                  align: top_left
+                  x: 24
+                  y: 6
+                  id: computerkamer_temp_label
+                  styles: roboto15_style
+                  text: "--°"
+              - label:
+                  text_font: icon_font_small
+                  align: top_left
+                  x: 92
+                  y: 6
+                  text: $water_percent
+              - label:
+                  align: top_left
+                  x: 110
+                  y: 6
+                  id: computerkamer_humidity_label
+                  styles: roboto15_style
+                  text: "--%"
             on_press:
               - homeassistant.service:
                   service: scene.turn_on
