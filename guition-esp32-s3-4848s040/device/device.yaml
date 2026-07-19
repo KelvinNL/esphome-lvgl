@@ -25,6 +25,22 @@ esp32:
 
 
 # -----------------------------------------------------------------------------
+# SCREEN SLEEP STATE
+# -----------------------------------------------------------------------------
+# Tracks whether the screen is currently asleep (backlight off, LVGL paused).
+# Set to true by lvgl.yaml's on_idle trigger after 10 minutes of no touch.
+# Used by the touchscreen's on_touch trigger below to "swallow" the very
+# first touch that wakes the screen, so it doesn't also press whatever
+# button happens to be under your finger.
+# -----------------------------------------------------------------------------
+globals:
+  - id: screen_asleep
+    type: bool
+    restore_value: no
+    initial_value: 'false'
+
+
+# -----------------------------------------------------------------------------
 # ESPHOME DEVICE IDENTITY
 # -----------------------------------------------------------------------------
 # Basic device information visible in Home Assistant.
@@ -152,6 +168,17 @@ touchscreen:
   - platform: gt911
     id: tft_touch
     display: tft_display
+    on_touch:
+      - if:
+          condition:
+            lambda: 'return id(screen_asleep);'
+          then:
+            - light.turn_on: backlight
+            - globals.set:
+                id: screen_asleep
+                value: 'false'
+            - delay: 300ms
+            - lvgl.resume:
 
 
 # -----------------------------------------------------------------------------
