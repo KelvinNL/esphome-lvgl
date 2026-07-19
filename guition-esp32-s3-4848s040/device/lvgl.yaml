@@ -259,8 +259,13 @@ lvgl:
             grid_cell_row_pos: 2
             widgets:
               - label:
+                  text_font: $icon_font
                   align: center
-                  text: "More >"
+                  y: -20
+                  text: $chevron_right
+              - label:
+                  align: bottom_left
+                  text: "More"
             on_click:
               - lvgl.page.show:
                   id: extras_page
@@ -289,28 +294,10 @@ lvgl:
         - button:
             height: $button_height_single
             width: $button_width
-            checkable: false
-            id: extras_back_button
-            styles: control
-            grid_cell_column_pos: 0
-            grid_cell_row_pos: 0
-            widgets:
-              - label:
-                  align: center
-                  text: "< Back"
-            on_click:
-              - lvgl.page.show:
-                  id: main_page
-                  animation: NONE
-                  time: 50ms
-
-        - button:
-            height: $button_height_single
-            width: $button_width
             checkable: true
             id: printer_button
             styles: control
-            grid_cell_column_pos: 1
+            grid_cell_column_pos: 0
             grid_cell_row_pos: 0
             widgets:
               - label:
@@ -336,7 +323,7 @@ lvgl:
             width: $button_width
             clickable: false
             styles: webhook
-            grid_cell_column_pos: 2
+            grid_cell_column_pos: 1
             grid_cell_row_pos: 0
             widgets:
               - label:
@@ -352,8 +339,8 @@ lvgl:
             width: $button_width
             clickable: false
             styles: webhook
-            grid_cell_column_pos: 0
-            grid_cell_row_pos: 1
+            grid_cell_column_pos: 2
+            grid_cell_row_pos: 0
             widgets:
               - label:
                   align: top_left
@@ -368,13 +355,56 @@ lvgl:
             width: $button_width
             clickable: false
             styles: webhook
-            grid_cell_column_pos: 1
+            grid_cell_column_pos: 0
             grid_cell_row_pos: 1
             widgets:
               - label:
-                  align: top_left
-                  text: "Remaining"
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $timer_sand
               - label:
                   align: bottom_left
                   id: printer_remaining_label
                   text: "--"
+
+        - button:
+            height: $button_height_single
+            width: $button_width
+            clickable: false
+            styles: webhook
+            grid_cell_column_pos: 1
+            grid_cell_row_pos: 1
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $clock_check_outline
+              - label:
+                  align: bottom_left
+                  id: printer_finish_label
+                  text: "--:--"
+
+        - button:
+            height: $button_height_single
+            width: $button_width
+            checkable: false
+            id: extras_back_button
+            styles: control
+            grid_cell_column_pos: 2
+            grid_cell_row_pos: 2
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $chevron_left
+              - label:
+                  align: bottom_left
+                  text: "Back"
+            on_click:
+              - lvgl.page.show:
+                  id: main_page
+                  animation: NONE
+                  time: 50ms
