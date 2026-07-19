@@ -93,8 +93,8 @@ lvgl:
                   align: top_left
                   x: 4
                   y: 4
-                  height: content
-                  width: content
+                  height: SIZE_CONTENT
+                  width: SIZE_CONTENT
                   clickable: false
                   bg_opa: 0
                   border_width: 0
@@ -116,8 +116,8 @@ lvgl:
                   align: top_right
                   x: -4
                   y: 4
-                  height: content
-                  width: content
+                  height: SIZE_CONTENT
+                  width: SIZE_CONTENT
                   clickable: false
                   bg_opa: 0
                   border_width: 0
@@ -162,8 +162,8 @@ lvgl:
                   align: top_left
                   x: 4
                   y: 4
-                  height: content
-                  width: content
+                  height: SIZE_CONTENT
+                  width: SIZE_CONTENT
                   clickable: false
                   bg_opa: 0
                   border_width: 0
@@ -185,8 +185,8 @@ lvgl:
                   align: top_right
                   x: -4
                   y: 4
-                  height: content
-                  width: content
+                  height: SIZE_CONTENT
+                  width: SIZE_CONTENT
                   clickable: false
                   bg_opa: 0
                   border_width: 0
@@ -231,8 +231,8 @@ lvgl:
                   align: top_left
                   x: 4
                   y: 4
-                  height: content
-                  width: content
+                  height: SIZE_CONTENT
+                  width: SIZE_CONTENT
                   clickable: false
                   bg_opa: 0
                   border_width: 0
@@ -254,8 +254,8 @@ lvgl:
                   align: top_right
                   x: -4
                   y: 4
-                  height: content
-                  width: content
+                  height: SIZE_CONTENT
+                  width: SIZE_CONTENT
                   clickable: false
                   bg_opa: 0
                   border_width: 0
