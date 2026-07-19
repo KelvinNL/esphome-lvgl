@@ -31,6 +31,9 @@ font:
       "\U000F02E3",  # mdi-bed
       "\U000F0AAB",  # mdi-desktop-tower-monitor
       "\U000F12CD",  # mdi-lightbulb-group-off
+      "\U000F051F",  # mdi-timer-sand
+      "\U000F0FA9",  # mdi-clock-check-outline
+      "\U000F0142",  # mdi-chevron-right
       ]
   - file: 'https://github.com/Templarian/MaterialDesign-Webfont/raw/v7.4.47/fonts/materialdesignicons-webfont.ttf'
     id: icon_font_small
@@ -67,3 +70,6 @@ substitutions:
   bed:            "\U000F02E3"
   desktop_tower_monitor: "\U000F0AAB"
   lightbulb_group_off:   "\U000F12CD"
+  timer_sand:     "\U000F051F"
+  clock_check_outline: "\U000F0FA9"
+  chevron_right:  "\U000F0142"
