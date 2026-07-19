@@ -92,26 +92,26 @@ lvgl:
               - label:
                   text_font: icon_font_small
                   align: top_left
-                  x: 6
-                  y: 6
+                  x: 2
+                  y: 2
                   text: $thermometer
               - label:
                   align: top_left
-                  x: 24
-                  y: 6
+                  x: 20
+                  y: 2
                   id: woonkamer_temp_label
                   styles: roboto15_style
                   text: "--°"
               - label:
                   text_font: icon_font_small
                   align: top_left
-                  x: 92
-                  y: 6
+                  x: 88
+                  y: 2
                   text: $water_percent
               - label:
                   align: top_left
-                  x: 110
-                  y: 6
+                  x: 106
+                  y: 2
                   id: woonkamer_humidity_label
                   styles: roboto15_style
                   text: "--%"
@@ -141,26 +141,26 @@ lvgl:
               - label:
                   text_font: icon_font_small
                   align: top_left
-                  x: 6
-                  y: 6
+                  x: 2
+                  y: 2
                   text: $thermometer
               - label:
                   align: top_left
-                  x: 24
-                  y: 6
+                  x: 20
+                  y: 2
                   id: slaapkamer_temp_label
                   styles: roboto15_style
                   text: "--°"
               - label:
                   text_font: icon_font_small
                   align: top_left
-                  x: 92
-                  y: 6
+                  x: 88
+                  y: 2
                   text: $water_percent
               - label:
                   align: top_left
-                  x: 110
-                  y: 6
+                  x: 106
+                  y: 2
                   id: slaapkamer_humidity_label
                   styles: roboto15_style
                   text: "--%"
@@ -190,26 +190,26 @@ lvgl:
               - label:
                   text_font: icon_font_small
                   align: top_left
-                  x: 6
-                  y: 6
+                  x: 2
+                  y: 2
                   text: $thermometer
               - label:
                   align: top_left
-                  x: 24
-                  y: 6
+                  x: 20
+                  y: 2
                   id: computerkamer_temp_label
                   styles: roboto15_style
                   text: "--°"
               - label:
                   text_font: icon_font_small
                   align: top_left
-                  x: 92
-                  y: 6
+                  x: 88
+                  y: 2
                   text: $water_percent
               - label:
                   align: top_left
-                  x: 110
-                  y: 6
+                  x: 106
+                  y: 2
                   id: computerkamer_humidity_label
                   styles: roboto15_style
                   text: "--%"
