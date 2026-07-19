@@ -34,6 +34,8 @@ font:
       "\U000F051F",  # mdi-timer-sand
       "\U000F0FA9",  # mdi-clock-check-outline
       "\U000F0142",  # mdi-chevron-right
+      "\U000F0996",  # mdi-progress-clock
+      "\U000F09EE",  # mdi-file-document-outline
       ]
   - file: 'https://github.com/Templarian/MaterialDesign-Webfont/raw/v7.4.47/fonts/materialdesignicons-webfont.ttf'
     id: icon_font_small
@@ -73,3 +75,5 @@ substitutions:
   timer_sand:     "\U000F051F"
   clock_check_outline: "\U000F0FA9"
   chevron_right:  "\U000F0142"
+  progress_clock: "\U000F0996"
+  file_document_outline: "\U000F09EE"
