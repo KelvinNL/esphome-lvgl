@@ -87,7 +87,7 @@ lvgl:
                   y: -20
                   text: $sofa
               - label:
-                  align: bottom_left
+                  align: bottom_mid
                   text: "Woonkamer"
               - label:
                   text_font: icon_font_small
@@ -136,7 +136,7 @@ lvgl:
                   y: -20
                   text: $bed
               - label:
-                  align: bottom_left
+                  align: bottom_mid
                   text: "Slaapkamer"
               - label:
                   text_font: icon_font_small
@@ -185,7 +185,7 @@ lvgl:
                   y: -20
                   text: $desktop_tower_monitor
               - label:
-                  align: bottom_left
+                  align: bottom_mid
                   text: "Computerkamer"
               - label:
                   text_font: icon_font_small
@@ -235,7 +235,7 @@ lvgl:
                   y: -20
                   text: $lightbulb_group_off
               - label:
-                  align: bottom_left
+                  align: bottom_mid
                   text: "Uit"
             on_press:
               - homeassistant.service:
@@ -258,7 +258,7 @@ lvgl:
                   y: -20
                   text: $lightbulb_group_off
               - label:
-                  align: bottom_left
+                  align: bottom_mid
                   text: "Uit"
             on_press:
               - homeassistant.service:
@@ -281,7 +281,7 @@ lvgl:
                   y: -20
                   text: $lightbulb_group_off
               - label:
-                  align: bottom_left
+                  align: bottom_mid
                   text: "Uit"
             on_press:
               - homeassistant.service:
@@ -305,7 +305,7 @@ lvgl:
                   y: -20
                   text: $ledstrip
               - label:
-                  align: bottom_left
+                  align: bottom_mid
                   text: "TV kijken"
             on_press:
               - homeassistant.service:
@@ -328,7 +328,7 @@ lvgl:
                   y: -20
                   text: $ledstrip
               - label:
-                  align: bottom_left
+                  align: bottom_mid
                   text: "TV in bed"
             on_press:
               - homeassistant.service:
@@ -351,7 +351,7 @@ lvgl:
                   y: -20
                   text: $chevron_right
               - label:
-                  align: bottom_left
+                  align: bottom_mid
                   text: "More"
             on_click:
               - lvgl.page.show:
@@ -397,7 +397,7 @@ lvgl:
                   id: printer_progress_label
                   text: "--%"
               - label:
-                  align: bottom_left
+                  align: bottom_mid
                   text: "Printer"
             on_press:
               - homeassistant.service:
@@ -419,7 +419,7 @@ lvgl:
                   y: -20
                   text: $progress_clock
               - label:
-                  align: bottom_left
+                  align: bottom_mid
                   id: printer_status_label
                   text: "--"
 
@@ -437,7 +437,7 @@ lvgl:
                   y: -20
                   text: $file_document_outline
               - label:
-                  align: bottom_left
+                  align: bottom_mid
                   id: printer_job_label
                   text: "--"
 
@@ -455,7 +455,7 @@ lvgl:
                   y: -20
                   text: $timer_sand
               - label:
-                  align: bottom_left
+                  align: bottom_mid
                   id: printer_remaining_label
                   text: "--"
 
@@ -473,7 +473,7 @@ lvgl:
                   y: -20
                   text: $clock_check_outline
               - label:
-                  align: bottom_left
+                  align: bottom_mid
                   id: printer_finish_label
                   text: "--:--"
 
@@ -492,7 +492,7 @@ lvgl:
                   y: -20
                   text: $chevron_left
               - label:
-                  align: bottom_left
+                  align: bottom_mid
                   text: "Back"
             on_click:
               - lvgl.page.show:
