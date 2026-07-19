@@ -13,7 +13,8 @@
 
 sensor:
 
-  # Indoor temperature (Woonkamer)
+  # Indoor temperature (Woonkamer) - also feeds the top bar and the
+  # Woonkamer scene button's top-left corner label
   - platform: homeassistant
     entity_id: sensor.sensor_woonkamer_temperature
     id: woonkamer_temperature
@@ -23,6 +24,64 @@ sensor:
           text:
             format: "%.1f° / %.1f°"
             args: [ 'x', 'id(weather_temperature).state' ]
+      - lvgl.label.update:
+          id: woonkamer_temp_label
+          text:
+            format: "%.0f°"
+            args: [ 'x' ]
+
+  # Woonkamer humidity - button's top-right corner label
+  - platform: homeassistant
+    entity_id: sensor.sensor_woonkamer_humidity
+    id: woonkamer_humidity
+    on_value:
+      - lvgl.label.update:
+          id: woonkamer_humidity_label
+          text:
+            format: "%.0f%%"
+            args: [ 'x' ]
+
+  # Slaapkamer temperature / humidity - button corner labels
+  - platform: homeassistant
+    entity_id: sensor.sensor_slaapkamer_temperature
+    id: slaapkamer_temperature
+    on_value:
+      - lvgl.label.update:
+          id: slaapkamer_temp_label
+          text:
+            format: "%.0f°"
+            args: [ 'x' ]
+
+  - platform: homeassistant
+    entity_id: sensor.sensor_slaapkamer_humidity
+    id: slaapkamer_humidity
+    on_value:
+      - lvgl.label.update:
+          id: slaapkamer_humidity_label
+          text:
+            format: "%.0f%%"
+            args: [ 'x' ]
+
+  # Computerkamer temperature / humidity - button corner labels
+  - platform: homeassistant
+    entity_id: sensor.sensor_temperature
+    id: computerkamer_temperature
+    on_value:
+      - lvgl.label.update:
+          id: computerkamer_temp_label
+          text:
+            format: "%.0f°"
+            args: [ 'x' ]
+
+  - platform: homeassistant
+    entity_id: sensor.sensor_humidity
+    id: computerkamer_humidity
+    on_value:
+      - lvgl.label.update:
+          id: computerkamer_humidity_label
+          text:
+            format: "%.0f%%"
+            args: [ 'x' ]
 
   # Outdoor temperature, from the weather entity's "temperature" attribute
   - platform: homeassistant
