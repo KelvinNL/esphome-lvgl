@@ -327,8 +327,10 @@ lvgl:
             grid_cell_row_pos: 0
             widgets:
               - label:
-                  align: top_left
-                  text: "Status"
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $progress_clock
               - label:
                   align: bottom_left
                   id: printer_status_label
@@ -343,8 +345,10 @@ lvgl:
             grid_cell_row_pos: 0
             widgets:
               - label:
-                  align: top_left
-                  text: "Job"
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $file_document_outline
               - label:
                   align: bottom_left
                   id: printer_job_label
