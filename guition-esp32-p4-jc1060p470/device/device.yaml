@@ -15,6 +15,15 @@ esp32:
       CONFIG_SPIRAM_XIP_FROM_PSRAM: "y"   # Stop screen flashing during OTA
       CONFIG_SDMMC_HOST_DEFAULT: "y"
 
+# Screen sleep state - tracks whether the screen is currently asleep so the
+# wake touch can be "swallowed" (see touchscreen: on_touch: below) instead
+# of also pressing whatever button is under your finger.
+globals:
+  - id: screen_asleep
+    type: bool
+    restore_value: no
+    initial_value: 'false'
+
 # Esphome
 esphome:
   name: ${name}
@@ -101,6 +110,17 @@ touchscreen:
     i2c_id: bus_a
     reset_pin: GPIO22
     interrupt_pin: GPIO21
+    on_touch:
+      - if:
+          condition:
+            lambda: 'return id(screen_asleep);'
+          then:
+            - light.turn_on: display_backlight
+            - globals.set:
+                id: screen_asleep
+                value: 'false'
+            - delay: 300ms
+            - lvgl.resume:
 
 # Display
 display:
