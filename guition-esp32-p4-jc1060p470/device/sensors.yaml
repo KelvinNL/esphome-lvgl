@@ -1,246 +1,228 @@
+# =============================================================================
+# SENSORS - Computerkamer 7" Panel (JC1060P470)
+# =============================================================================
+# Same room-control pattern as the Woonkamer panel (scene buttons highlighted
+# via a representative light, since scenes have no on/off state), plus a
+# fuller set of 3D printer stats since this screen has more room.
+# =============================================================================
+
 sensor:
 
-  # Header Outdoor Temperate
+  # --- 3D printer (the A1, 03919D533008224 - not the offline A1 Mini) ---
   - platform: homeassistant
-    entity_id: sensor.office_temperature
-    id: office_temperature
+    entity_id: sensor.a1_03919d533008224_printvoortgang
+    id: printer_progress
     on_value:
       - lvgl.label.update:
-          id: temperatures
+          id: printer_progress_label
           text:
-            format: "%d° / %d°"
-            args: [ '(int)round(id(outdoor_temperature).state)', '(int)round(x)' ]
-
-  - platform: homeassistant
-    entity_id: sensor.outdoor_temperature
-    id: outdoor_temperature
-    on_value:
-      - lvgl.label.update:
-          id: temperatures
-          text:
-            format: "%d° / %d°"
-            args: [ '(int)round(x)', '(int)round(id(office_temperature).state)' ]
-
-  # Office Blind Position
-  - platform: homeassistant
-    entity_id: cover.office_blind
-    id: office_blind_position
-    attribute: current_position
-
-  # Centauri Carbon Print Progress
-  - platform: homeassistant
-    entity_id: sensor.centauri_carbon_percent_complete_helper
-    id: centauri_carbon_percent
-    on_value:
-      - lvgl.label.update:
-          id: print_progress_label
-          text:
-            format: "%.0f"
+            format: "%.0f%%"
             args: [ 'x' ]
 
-  # Filament Heater Humidity
+  # Remaining time - sensor reports decimal HOURS, split into h/m for display
   - platform: homeassistant
-    entity_id: sensor.office_filament_heater_sensor_humidity
-    id: filament_heater_humidity
+    entity_id: sensor.a1_03919d533008224_resterende_tijd
+    id: printer_remaining
     on_value:
       - lvgl.label.update:
-          id: dryer_humidity_label
+          id: printer_remaining_label
           text:
-            format: "%.0f"
-            args: [ 'x' ]
+            format: "%dh %02dm"
+            args: [ '(int)x', '(int)round((x - (int)x) * 60)' ]
 
+  # Nozzle temperature - current / target combined into one label
+  - platform: homeassistant
+    entity_id: sensor.a1_03919d533008224_nozzle_temperatuur
+    id: printer_nozzle_current
+    on_value:
+      - lvgl.label.update:
+          id: printer_nozzle_label
+          text:
+            format: "%.0f° / %.0f°"
+            args: [ 'x', 'id(printer_nozzle_target).state' ]
+
+  - platform: homeassistant
+    entity_id: sensor.a1_03919d533008224_doeltemperatuur_nozzle
+    id: printer_nozzle_target
+    on_value:
+      - lvgl.label.update:
+          id: printer_nozzle_label
+          text:
+            format: "%.0f° / %.0f°"
+            args: [ 'id(printer_nozzle_current).state', 'x' ]
+
+  # Bed temperature - current / target combined into one label
+  - platform: homeassistant
+    entity_id: sensor.a1_03919d533008224_bedtemperatuur
+    id: printer_bed_current
+    on_value:
+      - lvgl.label.update:
+          id: printer_bed_label
+          text:
+            format: "%.0f° / %.0f°"
+            args: [ 'x', 'id(printer_bed_target).state' ]
+
+  - platform: homeassistant
+    entity_id: sensor.a1_03919d533008224_doeltemperatuur_bed
+    id: printer_bed_target
+    on_value:
+      - lvgl.label.update:
+          id: printer_bed_label
+          text:
+            format: "%.0f° / %.0f°"
+            args: [ 'id(printer_bed_current).state', 'x' ]
+
+  # Layer - current / total layers combined into one label
+  - platform: homeassistant
+    entity_id: sensor.a1_03919d533008224_huidige_laag
+    id: printer_current_layer
+    on_value:
+      - lvgl.label.update:
+          id: printer_layer_label
+          text:
+            format: "%.0f / %.0f"
+            args: [ 'x', 'id(printer_total_layers).state' ]
+
+  - platform: homeassistant
+    entity_id: sensor.a1_03919d533008224_hoeveelheid_lagen
+    id: printer_total_layers
+    on_value:
+      - lvgl.label.update:
+          id: printer_layer_label
+          text:
+            format: "%.0f / %.0f"
+            args: [ 'id(printer_current_layer).state', 'x' ]
+
+
+text_sensor:
+
+  - platform: homeassistant
+    entity_id: sensor.a1_03919d533008224_printstatus
+    id: printer_status
+    on_value:
+      - lvgl.label.update:
+          id: printer_status_label
+          text: !lambda return x.c_str();
+
+  - platform: homeassistant
+    entity_id: sensor.a1_03919d533008224_huidige_fase
+    id: printer_phase
+    on_value:
+      - lvgl.label.update:
+          id: printer_phase_label
+          text: !lambda return x.c_str();
+
+  - platform: homeassistant
+    entity_id: sensor.a1_03919d533008224_taaknaam
+    id: printer_job_name
+    on_value:
+      - lvgl.label.update:
+          id: printer_job_label
+          text: !lambda return x.c_str();
+
+  # Estimated finish time - sensor reports a UTC ISO8601 timestamp.
+  # Parses HH:MM and shifts +2h for Amsterdam summer time (CEST).
+  # NOTE: switch this to +1 once the Netherlands moves to winter time (CET).
+  - platform: homeassistant
+    entity_id: sensor.a1_03919d533008224_eindtijd
+    id: printer_finish_time
+    on_value:
+      - lvgl.label.update:
+          id: printer_finish_label
+          text: !lambda |-
+            std::string iso = x;
+            if (iso.length() < 16) return std::string("--:--");
+            int hour = atoi(iso.substr(11, 2).c_str());
+            int minute = atoi(iso.substr(14, 2).c_str());
+            hour = (hour + 2) % 24;
+            char buf[8];
+            snprintf(buf, sizeof(buf), "%02d:%02d", hour, minute);
+            return std::string(buf);
 
 
 binary_sensor:
 
-  # Office Evening Scene
+  # ---------------------------------------------------------------------
+  # WOONKAMER - Proxy: light.staande_lamp
+  # ---------------------------------------------------------------------
   - platform: homeassistant
-    id: office_scene_evening
-    entity_id: switch.office_evening_stateful_scene
+    id: woonkamer_light_state
+    entity_id: light.staande_lamp
     trigger_on_initial_state: true
     on_state:
       then:
         lvgl.widget.update:
-          id: office_scene_evening_button
+          id: woonkamer_scene_on_button
           state:
             checked: !lambda return x;
 
-  # Office Dimmed Scene
+  # ---------------------------------------------------------------------
+  # SLAAPKAMER - Proxy: light.bedlamp_kel
+  # ---------------------------------------------------------------------
   - platform: homeassistant
-    id: office_scene_dimmed
-    entity_id: switch.office_dimmed_stateful_scene
+    id: slaapkamer_light_state
+    entity_id: light.bedlamp_kel
     trigger_on_initial_state: true
     on_state:
       then:
         lvgl.widget.update:
-          id: office_scene_dimmed_button
+          id: slaapkamer_scene_on_button
           state:
             checked: !lambda return x;
 
-  # Office Calls Scene
+  # ---------------------------------------------------------------------
+  # COMPUTERKAMER - Proxy: light.393d0976_8033_4897_a389_633158737c15_1
+  # (Plank Lamp)
+  # ---------------------------------------------------------------------
   - platform: homeassistant
-    id: office_scene_desk_call
-    entity_id: switch.office_calls_stateful_scene
+    id: computerkamer_light_state
+    entity_id: light.393d0976_8033_4897_a389_633158737c15_1
     trigger_on_initial_state: true
     on_state:
       then:
         lvgl.widget.update:
-          id: office_scene_calls_button
+          id: computerkamer_scene_on_button
           state:
             checked: !lambda return x;
 
-  # Office Features Scene
+  # ---------------------------------------------------------------------
+  # TV KIJKEN (Woonkamer) - Proxy: light.tv_light_bar
+  # ---------------------------------------------------------------------
   - platform: homeassistant
-    id: office_scene_features
-    entity_id: switch.office_features_stateful_scene
+    id: tv_ambient_light_state
+    entity_id: light.tv_light_bar
     trigger_on_initial_state: true
     on_state:
       then:
         lvgl.widget.update:
-          id: office_scene_features_button
+          id: tv_ambient_button
           state:
             checked: !lambda return x;
 
-  # 3d Printer
+  # ---------------------------------------------------------------------
+  # TV KIJKEN IN BED (Slaapkamer) - Proxy: light.led_strip_bed
+  # ---------------------------------------------------------------------
   - platform: homeassistant
-    id: office_3d_printer_power
-    entity_id: switch.office_3d_printer_power
-    trigger_on_initial_state: true
-    on_state:
-      then:
-        - lvgl.widget.update:
-            id: printer_power_button
-            state:
-              checked: !lambda return x;
-        - lvgl.widget.update:
-            id: printer_power_icon
-            hidden: !lambda return x;
-        - lvgl.widget.update:
-            id: print_progress_container
-            hidden: !lambda return !x;
-
-  # Office Aircon
-  - platform: homeassistant
-    id: office_air_conditioner
-    entity_id: switch.office_air_conditioner
+    id: tv_bed_light_state
+    entity_id: light.led_strip_bed
     trigger_on_initial_state: true
     on_state:
       then:
         lvgl.widget.update:
-          id: office_aircon_button
+          id: tv_bed_button
           state:
             checked: !lambda return x;
 
-  # Battery Charger
+  # ---------------------------------------------------------------------
+  # 3D PRINTER SOCKET - highlights when the smart plug is on
+  # ---------------------------------------------------------------------
   - platform: homeassistant
-    id: office_battery_charger
-    entity_id: switch.battery_charger
+    id: printer_socket_state
+    entity_id: switch.bambulab_a1_mini_stopcontact_1
     trigger_on_initial_state: true
     on_state:
       then:
         lvgl.widget.update:
-          id: battery_charger_button
-          state:
-            checked: !lambda return x;
-
-  # Filament Heater 
-  - platform: homeassistant
-    id: office_filament_heater
-    entity_id: switch.office_filament_heater_893b
-    trigger_on_initial_state: true
-    on_state:
-      then:
-        - lvgl.widget.update:
-            id: filament_heater_button
-            state:
-              checked: !lambda return x;
-        - lvgl.widget.update:
-            id: filament_heater_icon
-            hidden: !lambda return x;
-        - lvgl.widget.update:
-            id: dryer_humidity_container
-            hidden: !lambda return !x;
-
-  # Office Blind 100% (Open)
-  - platform: template
-    id: office_blind_100
-    lambda: |-
-      if (id(office_blind_position).has_state()) {
-        return abs(id(office_blind_position).state - 100) <= 3;
-      }
-      return false;
-    on_state:
-      then:
-        lvgl.widget.update:
-          id: office_blind_open_button
-          state:
-            checked: !lambda return x;
-
-  # Office Blind 66% (Semi Open)
-  - platform: template
-    id: office_blind_66
-    lambda: |-
-      if (id(office_blind_position).has_state()) {
-        return abs(id(office_blind_position).state - 66) <= 3;
-      }
-      return false;
-    on_state:
-      then:
-        lvgl.widget.update:
-          id: office_blind_66_button
-          state:
-            checked: !lambda return x;
-
-  # Office Blind 33% (Semi Closed)
-  - platform: template
-    id: office_blind_33
-    lambda: |-
-      if (id(office_blind_position).has_state()) {
-        return abs(id(office_blind_position).state - 33) <= 3;
-      }
-      return false;
-    on_state:
-      then:
-        lvgl.widget.update:
-          id: office_blind_33_button
-          state:
-            checked: !lambda return x;
-
-  # Office Blind 0% (Close)
-  - platform: template
-    id: office_blind_0
-    lambda: |-
-      if (id(office_blind_position).has_state()) {
-        return abs(id(office_blind_position).state - 0) <= 3;
-      }
-      return false;
-    on_state:
-      then:
-        lvgl.widget.update:
-          id: office_blind_close_button
-          state:
-            checked: !lambda return x;
-
-  # Office Storage Lights
-  - platform: homeassistant
-    id: office_storage_lights
-    entity_id: light.office_storage
-    trigger_on_initial_state: true
-    on_state:
-      then:
-        lvgl.widget.update:
-          id: storage_lights_button
-          state:
-            checked: !lambda return x;
-
-  # Network Rack
-  - platform: homeassistant
-    id: network_rack
-    entity_id: light.office_network_rack
-    trigger_on_initial_state: true
-    on_state:
-      then:
-        lvgl.widget.update:
-          id: network_rack_button
+          id: printer_button
           state:
             checked: !lambda return x;
