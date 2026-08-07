@@ -11,8 +11,8 @@ esp32:
       disable_vfs_support_termios: false
       disable_vfs_support_select: false
       disable_vfs_support_dir: false
+      execute_from_psram: true   # fixes boot loop / OTA flicker (replaces CONFIG_SPIRAM_XIP_FROM_PSRAM)
     sdkconfig_options:
-      CONFIG_SPIRAM_XIP_FROM_PSRAM: "y"   # Stop screen flashing during OTA
       CONFIG_SDMMC_HOST_DEFAULT: "y"
 
 # Screen sleep state - tracks whether the screen is currently asleep so the
