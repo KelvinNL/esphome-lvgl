@@ -1,14 +1,19 @@
 # =============================================================================
 # LVGL TOUCHSCREEN INTERFACE - Computerkamer 7" Panel (JC1060P470)
 # =============================================================================
-# Single page, 5x4 grid (this screen is much bigger than the Woonkamer panel,
-# so everything fits without needing a second page).
+# 5x4 grid, two pages.
 #
-# Row 0: Woonkamer/Slaapkamer/Computerkamer "on" scene buttons, TV kijken,
-#        TV in bed
-# Row 1: matching "Uit" buttons, Printer power toggle, Status
-# Row 2: Job, Remaining, Finished, Layer, Nozzle temp
-# Row 3: Bed temp, Phase, (empty x3)
+# PAGE 1 (main_page) - same room/scene buttons as the Woonkamer panel:
+#   Row 0: Woonkamer / Slaapkamer / Computerkamer "on" buttons, TV kijken,
+#          TV in bed
+#   Row 1: matching "Uit" buttons (plain, no highlight)
+#   Row 3: More -> page 2 (bottom-right, same spot as the Woonkamer panel)
+#
+# PAGE 2 (printers_page) - both printers side by side:
+#   Row 0-1: A1 Mini (power toggle, status, job, remaining, finished,
+#            layer, nozzle temp, bed temp, phase)
+#   Row 2-3: A1 (status-only tile - no smart plug - then the same stats)
+#   Back -> page 1 (bottom-right)
 # =============================================================================
 
 lvgl:
@@ -34,6 +39,10 @@ lvgl:
           text_color: 0xFFFFFF
 
   pages:
+
+    # ===================================================================
+    # PAGE 1: room / scene controls
+    # ===================================================================
     - id: main_page
       layout:
         type: grid
@@ -50,7 +59,7 @@ lvgl:
 
       widgets:
 
-        # ------------------- ROW 0: "on" scene buttons + TV ----------------
+        # ------------------- ROW 0: "on" buttons + TV -----------------
         - button:
             checkable: true
             id: woonkamer_scene_on_button
@@ -156,7 +165,7 @@ lvgl:
                   data:
                     entity_id: scene.tv_kijken_in_bed
 
-        # ------------------- ROW 1: "Uit" buttons + Printer + Status -------
+        # ------------------- ROW 1: "Uit" buttons -----------------------
         - button:
             checkable: false
             styles: webhook
@@ -217,12 +226,53 @@ lvgl:
                   data:
                     entity_id: scene.lampen_computerkamer_uit
 
+        # ------------------- ROW 3: More -> page 2 ------------------------
         - button:
-            checkable: true
-            id: printer_button
+            checkable: false
+            id: more_nav_button
             styles: control
-            grid_cell_column_pos: 3
-            grid_cell_row_pos: 1
+            grid_cell_column_pos: 4
+            grid_cell_row_pos: 3
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $chevron_right
+              - label:
+                  align: bottom_mid
+                  text: "More"
+            on_click:
+              - lvgl.page.show:
+                  id: printers_page
+                  animation: NONE
+                  time: 50ms
+
+    # ===================================================================
+    # PAGE 2: both printers
+    # ===================================================================
+    - id: printers_page
+      layout:
+        type: grid
+        grid_columns: [fr(1), fr(1), fr(1), fr(1), fr(1)]
+        grid_rows: [fr(1), fr(1), fr(1), fr(1)]
+      scrollbar_mode: "off"
+      width: 100%
+      bg_color: Black
+      bg_opa: cover
+      pad_top: 34
+      pad_bottom: 5
+      pad_left: 5
+      pad_right: 5
+
+      widgets:
+
+        # ------------------- ROW 0: A1 MINI (status-only, no plug) --------
+        - button:
+            clickable: false
+            styles: webhook
+            grid_cell_column_pos: 0
+            grid_cell_row_pos: 0
             widgets:
               - label:
                   text_font: $icon_font
@@ -231,21 +281,129 @@ lvgl:
                   text: $printer
               - label:
                   align: top_right
-                  id: printer_progress_label
+                  id: a1mini_progress_label
                   text: "--%"
               - label:
                   align: bottom_mid
-                  text: "Printer"
-            on_press:
-              - homeassistant.service:
-                  service: switch.toggle
-                  data:
-                    entity_id: switch.bambulab_a1_mini_stopcontact_1
+                  text: "A1 Mini"
+
+        - button:
+            clickable: false
+            styles: webhook
+            grid_cell_column_pos: 1
+            grid_cell_row_pos: 0
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $progress_clock
+              - label:
+                  align: bottom_mid
+                  id: a1mini_status_label
+                  text: "--"
+
+        - button:
+            clickable: false
+            styles: webhook
+            grid_cell_column_pos: 2
+            grid_cell_row_pos: 0
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $file_document_outline
+              - label:
+                  align: bottom_mid
+                  id: a1mini_job_label
+                  text: "--"
+
+        - button:
+            clickable: false
+            styles: webhook
+            grid_cell_column_pos: 3
+            grid_cell_row_pos: 0
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $timer_sand
+              - label:
+                  align: bottom_mid
+                  id: a1mini_remaining_label
+                  text: "--"
 
         - button:
             clickable: false
             styles: webhook
             grid_cell_column_pos: 4
+            grid_cell_row_pos: 0
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $clock_check_outline
+              - label:
+                  align: bottom_mid
+                  id: a1mini_finish_label
+                  text: "--:--"
+
+        # ------------------- ROW 1: A1 MINI (continued) --------------------
+        - button:
+            clickable: false
+            styles: webhook
+            grid_cell_column_pos: 0
+            grid_cell_row_pos: 1
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $layers_outline
+              - label:
+                  align: bottom_mid
+                  id: a1mini_layer_label
+                  text: "--"
+
+        - button:
+            clickable: false
+            styles: webhook
+            grid_cell_column_pos: 1
+            grid_cell_row_pos: 1
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $thermometer
+              - label:
+                  align: bottom_mid
+                  id: a1mini_nozzle_label
+                  text: "--"
+
+        - button:
+            clickable: false
+            styles: webhook
+            grid_cell_column_pos: 2
+            grid_cell_row_pos: 1
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $thermometer
+              - label:
+                  align: bottom_mid
+                  id: a1mini_bed_label
+                  text: "--"
+
+        - button:
+            clickable: false
+            styles: webhook
+            grid_cell_column_pos: 3
             grid_cell_row_pos: 1
             widgets:
               - label:
@@ -255,13 +413,14 @@ lvgl:
                   text: $progress_clock
               - label:
                   align: bottom_mid
-                  id: printer_status_label
+                  id: a1mini_phase_label
                   text: "--"
 
-        # ------------------- ROW 2: Job, Remaining, Finished, Layer, Nozzle
+        # ------------------- ROW 2: A1 (power) -----------------------------
         - button:
-            clickable: false
-            styles: webhook
+            checkable: true
+            id: a1_button
+            styles: control
             grid_cell_column_pos: 0
             grid_cell_row_pos: 2
             widgets:
@@ -269,11 +428,19 @@ lvgl:
                   text_font: $icon_font
                   align: center
                   y: -20
-                  text: $file_document_outline
+                  text: $printer
+              - label:
+                  align: top_right
+                  id: a1_progress_label
+                  text: "--%"
               - label:
                   align: bottom_mid
-                  id: printer_job_label
-                  text: "--"
+                  text: "A1"
+            on_press:
+              - homeassistant.service:
+                  service: switch.toggle
+                  data:
+                    entity_id: switch.bambulab_a1_stopcontact_1
 
         - button:
             clickable: false
@@ -285,10 +452,10 @@ lvgl:
                   text_font: $icon_font
                   align: center
                   y: -20
-                  text: $timer_sand
+                  text: $progress_clock
               - label:
                   align: bottom_mid
-                  id: printer_remaining_label
+                  id: a1_status_label
                   text: "--"
 
         - button:
@@ -301,11 +468,11 @@ lvgl:
                   text_font: $icon_font
                   align: center
                   y: -20
-                  text: $clock_check_outline
+                  text: $file_document_outline
               - label:
                   align: bottom_mid
-                  id: printer_finish_label
-                  text: "--:--"
+                  id: a1_job_label
+                  text: "--"
 
         - button:
             clickable: false
@@ -317,10 +484,10 @@ lvgl:
                   text_font: $icon_font
                   align: center
                   y: -20
-                  text: $layers_outline
+                  text: $timer_sand
               - label:
                   align: bottom_mid
-                  id: printer_layer_label
+                  id: a1_remaining_label
                   text: "--"
 
         - button:
@@ -333,13 +500,13 @@ lvgl:
                   text_font: $icon_font
                   align: center
                   y: -20
-                  text: $thermometer
+                  text: $clock_check_outline
               - label:
                   align: bottom_mid
-                  id: printer_nozzle_label
-                  text: "--"
+                  id: a1_finish_label
+                  text: "--:--"
 
-        # ------------------- ROW 3: Bed temp, Phase -------------------------
+        # ------------------- ROW 3: A1 (continued) + Back --------------------
         - button:
             clickable: false
             styles: webhook
@@ -350,10 +517,10 @@ lvgl:
                   text_font: $icon_font
                   align: center
                   y: -20
-                  text: $thermometer
+                  text: $layers_outline
               - label:
                   align: bottom_mid
-                  id: printer_bed_label
+                  id: a1_layer_label
                   text: "--"
 
         - button:
@@ -366,8 +533,61 @@ lvgl:
                   text_font: $icon_font
                   align: center
                   y: -20
+                  text: $thermometer
+              - label:
+                  align: bottom_mid
+                  id: a1_nozzle_label
+                  text: "--"
+
+        - button:
+            clickable: false
+            styles: webhook
+            grid_cell_column_pos: 2
+            grid_cell_row_pos: 3
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $thermometer
+              - label:
+                  align: bottom_mid
+                  id: a1_bed_label
+                  text: "--"
+
+        - button:
+            clickable: false
+            styles: webhook
+            grid_cell_column_pos: 3
+            grid_cell_row_pos: 3
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
                   text: $progress_clock
               - label:
                   align: bottom_mid
-                  id: printer_phase_label
+                  id: a1_phase_label
                   text: "--"
+
+        - button:
+            checkable: false
+            id: printers_back_button
+            styles: control
+            grid_cell_column_pos: 4
+            grid_cell_row_pos: 3
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $chevron_left
+              - label:
+                  align: bottom_mid
+                  text: "Back"
+            on_click:
+              - lvgl.page.show:
+                  id: main_page
+                  animation: NONE
+                  time: 50ms
