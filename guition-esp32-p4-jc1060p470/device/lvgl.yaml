@@ -343,162 +343,13 @@ lvgl:
 
       widgets:
 
-        # ------------------- ROW 0: A1 MINI (status-only, no plug) --------
-        - button:
-            clickable: false
-            styles: webhook
-            grid_cell_column_pos: 0
-            grid_cell_row_pos: 0
-            widgets:
-              - label:
-                  text_font: $icon_font
-                  align: center
-                  y: -20
-                  text: $printer
-              - label:
-                  align: top_right
-                  id: a1mini_progress_label
-                  text: "--%"
-              - label:
-                  align: bottom_mid
-                  text: "A1 Mini"
-
-        - button:
-            clickable: false
-            styles: webhook
-            grid_cell_column_pos: 1
-            grid_cell_row_pos: 0
-            widgets:
-              - label:
-                  text_font: $icon_font
-                  align: center
-                  y: -20
-                  text: $progress_clock
-              - label:
-                  align: bottom_mid
-                  id: a1mini_status_label
-                  text: "--"
-
-        - button:
-            clickable: false
-            styles: webhook
-            grid_cell_column_pos: 2
-            grid_cell_row_pos: 0
-            widgets:
-              - label:
-                  text_font: $icon_font
-                  align: center
-                  y: -20
-                  text: $file_document_outline
-              - label:
-                  align: bottom_mid
-                  id: a1mini_job_label
-                  text: "--"
-
-        - button:
-            clickable: false
-            styles: webhook
-            grid_cell_column_pos: 3
-            grid_cell_row_pos: 0
-            widgets:
-              - label:
-                  text_font: $icon_font
-                  align: center
-                  y: -20
-                  text: $timer_sand
-              - label:
-                  align: bottom_mid
-                  id: a1mini_remaining_label
-                  text: "--"
-
-        - button:
-            clickable: false
-            styles: webhook
-            grid_cell_column_pos: 4
-            grid_cell_row_pos: 0
-            widgets:
-              - label:
-                  text_font: $icon_font
-                  align: center
-                  y: -20
-                  text: $clock_check_outline
-              - label:
-                  align: bottom_mid
-                  id: a1mini_finish_label
-                  text: "--:--"
-
-        # ------------------- ROW 1: A1 MINI (continued) --------------------
-        - button:
-            clickable: false
-            styles: webhook
-            grid_cell_column_pos: 0
-            grid_cell_row_pos: 1
-            widgets:
-              - label:
-                  text_font: $icon_font
-                  align: center
-                  y: -20
-                  text: $layers_outline
-              - label:
-                  align: bottom_mid
-                  id: a1mini_layer_label
-                  text: "--"
-
-        - button:
-            clickable: false
-            styles: webhook
-            grid_cell_column_pos: 1
-            grid_cell_row_pos: 1
-            widgets:
-              - label:
-                  text_font: $icon_font
-                  align: center
-                  y: -20
-                  text: $thermometer
-              - label:
-                  align: bottom_mid
-                  id: a1mini_nozzle_label
-                  text: "--"
-
-        - button:
-            clickable: false
-            styles: webhook
-            grid_cell_column_pos: 2
-            grid_cell_row_pos: 1
-            widgets:
-              - label:
-                  text_font: $icon_font
-                  align: center
-                  y: -20
-                  text: $thermometer
-              - label:
-                  align: bottom_mid
-                  id: a1mini_bed_label
-                  text: "--"
-
-        - button:
-            clickable: false
-            styles: webhook
-            grid_cell_column_pos: 3
-            grid_cell_row_pos: 1
-            widgets:
-              - label:
-                  text_font: $icon_font
-                  align: center
-                  y: -20
-                  text: $progress_clock
-              - label:
-                  align: bottom_mid
-                  id: a1mini_phase_label
-                  text: "--"
-
-        # ------------------- ROW 2: A1 (power) -----------------------------
+        # ------------------- ROW 0: A1 (power) -----------------------------
         - button:
             checkable: true
             id: a1_button
             styles: control
             grid_cell_column_pos: 0
-            grid_cell_row_pos: 2
+            grid_cell_row_pos: 0
             widgets:
               - label:
                   text_font: $icon_font
@@ -522,7 +373,7 @@ lvgl:
             clickable: false
             styles: webhook
             grid_cell_column_pos: 1
-            grid_cell_row_pos: 2
+            grid_cell_row_pos: 0
             widgets:
               - label:
                   text_font: $icon_font
@@ -538,7 +389,7 @@ lvgl:
             clickable: false
             styles: webhook
             grid_cell_column_pos: 2
-            grid_cell_row_pos: 2
+            grid_cell_row_pos: 0
             widgets:
               - label:
                   text_font: $icon_font
@@ -554,7 +405,7 @@ lvgl:
             clickable: false
             styles: webhook
             grid_cell_column_pos: 3
-            grid_cell_row_pos: 2
+            grid_cell_row_pos: 0
             widgets:
               - label:
                   text_font: $icon_font
@@ -570,7 +421,7 @@ lvgl:
             clickable: false
             styles: webhook
             grid_cell_column_pos: 4
-            grid_cell_row_pos: 2
+            grid_cell_row_pos: 0
             widgets:
               - label:
                   text_font: $icon_font
@@ -582,12 +433,12 @@ lvgl:
                   id: a1_finish_label
                   text: "--:--"
 
-        # ------------------- ROW 3: A1 (continued) + Back --------------------
+        # ------------------- ROW 1: A1 (continued) -------------------------
         - button:
             clickable: false
             styles: webhook
             grid_cell_column_pos: 0
-            grid_cell_row_pos: 3
+            grid_cell_row_pos: 1
             widgets:
               - label:
                   text_font: $icon_font
@@ -603,7 +454,7 @@ lvgl:
             clickable: false
             styles: webhook
             grid_cell_column_pos: 1
-            grid_cell_row_pos: 3
+            grid_cell_row_pos: 1
             widgets:
               - label:
                   text_font: $icon_font
@@ -619,7 +470,7 @@ lvgl:
             clickable: false
             styles: webhook
             grid_cell_column_pos: 2
-            grid_cell_row_pos: 3
+            grid_cell_row_pos: 1
             widgets:
               - label:
                   text_font: $icon_font
@@ -635,7 +486,7 @@ lvgl:
             clickable: false
             styles: webhook
             grid_cell_column_pos: 3
-            grid_cell_row_pos: 3
+            grid_cell_row_pos: 1
             widgets:
               - label:
                   text_font: $icon_font
@@ -647,7 +498,156 @@ lvgl:
                   id: a1_phase_label
                   text: "--"
 
+# ------------------- ROW 2: A1 MINI (status-only, no plug) --------
         - button:
+            clickable: false
+            styles: webhook
+            grid_cell_column_pos: 0
+            grid_cell_row_pos: 2
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $printer
+              - label:
+                  align: top_right
+                  id: a1mini_progress_label
+                  text: "--%"
+              - label:
+                  align: bottom_mid
+                  text: "A1 Mini"
+
+        - button:
+            clickable: false
+            styles: webhook
+            grid_cell_column_pos: 1
+            grid_cell_row_pos: 2
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $progress_clock
+              - label:
+                  align: bottom_mid
+                  id: a1mini_status_label
+                  text: "--"
+
+        - button:
+            clickable: false
+            styles: webhook
+            grid_cell_column_pos: 2
+            grid_cell_row_pos: 2
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $file_document_outline
+              - label:
+                  align: bottom_mid
+                  id: a1mini_job_label
+                  text: "--"
+
+        - button:
+            clickable: false
+            styles: webhook
+            grid_cell_column_pos: 3
+            grid_cell_row_pos: 2
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $timer_sand
+              - label:
+                  align: bottom_mid
+                  id: a1mini_remaining_label
+                  text: "--"
+
+        - button:
+            clickable: false
+            styles: webhook
+            grid_cell_column_pos: 4
+            grid_cell_row_pos: 2
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $clock_check_outline
+              - label:
+                  align: bottom_mid
+                  id: a1mini_finish_label
+                  text: "--:--"
+
+        # ------------------- ROW 3: A1 MINI (continued) --------------------
+        - button:
+            clickable: false
+            styles: webhook
+            grid_cell_column_pos: 0
+            grid_cell_row_pos: 3
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $layers_outline
+              - label:
+                  align: bottom_mid
+                  id: a1mini_layer_label
+                  text: "--"
+
+        - button:
+            clickable: false
+            styles: webhook
+            grid_cell_column_pos: 1
+            grid_cell_row_pos: 3
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $thermometer
+              - label:
+                  align: bottom_mid
+                  id: a1mini_nozzle_label
+                  text: "--"
+
+        - button:
+            clickable: false
+            styles: webhook
+            grid_cell_column_pos: 2
+            grid_cell_row_pos: 3
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $thermometer
+              - label:
+                  align: bottom_mid
+                  id: a1mini_bed_label
+                  text: "--"
+
+        - button:
+            clickable: false
+            styles: webhook
+            grid_cell_column_pos: 3
+            grid_cell_row_pos: 3
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $progress_clock
+              - label:
+                  align: bottom_mid
+                  id: a1mini_phase_label
+                  text: "--"
+
+                - button:
             checkable: false
             id: printers_back_button
             styles: control
