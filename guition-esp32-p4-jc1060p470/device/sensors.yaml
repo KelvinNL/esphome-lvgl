@@ -1,134 +1,256 @@
 # =============================================================================
 # SENSORS - Computerkamer 7" Panel (JC1060P470)
 # =============================================================================
-# Same room-control pattern as the Woonkamer panel (scene buttons highlighted
-# via a representative light, since scenes have no on/off state), plus a
-# fuller set of 3D printer stats since this screen has more room.
+# Page 1: room/scene controls - same pattern as the Woonkamer panel (scene
+# buttons highlighted via a representative light, since scenes have no
+# on/off state).
+# Page 2: full stats for BOTH printers - the A1 (03919D533008224) and the
+# A1 Mini (0309DA532001059). The A1 Mini has a smart plug so its tile is
+# a power toggle; the A1 has no smart plug, so its tile is status-only.
 # =============================================================================
 
 sensor:
 
-  # --- 3D printer (the A1, 03919D533008224 - not the offline A1 Mini) ---
+  # ===================== A1 MINI (0309DA532001059) =========================
   - platform: homeassistant
-    entity_id: sensor.a1_03919d533008224_printvoortgang
-    id: printer_progress
+    entity_id: sensor.a1mini_0309da532001059_printvoortgang
+    id: a1mini_progress
     on_value:
       - lvgl.label.update:
-          id: printer_progress_label
+          id: a1mini_progress_label
           text:
             format: "%.0f%%"
             args: [ 'x' ]
 
-  # Remaining time - sensor reports decimal HOURS, split into h/m for display
   - platform: homeassistant
-    entity_id: sensor.a1_03919d533008224_resterende_tijd
-    id: printer_remaining
+    entity_id: sensor.a1mini_0309da532001059_resterende_tijd
+    id: a1mini_remaining
     on_value:
       - lvgl.label.update:
-          id: printer_remaining_label
+          id: a1mini_remaining_label
           text:
             format: "%dh %02dm"
             args: [ '(int)x', '(int)round((x - (int)x) * 60)' ]
 
-  # Nozzle temperature - current / target combined into one label
   - platform: homeassistant
-    entity_id: sensor.a1_03919d533008224_nozzle_temperatuur
-    id: printer_nozzle_current
+    entity_id: sensor.a1mini_0309da532001059_nozzle_temperatuur
+    id: a1mini_nozzle_current
     on_value:
       - lvgl.label.update:
-          id: printer_nozzle_label
+          id: a1mini_nozzle_label
           text:
             format: "%.0f° / %.0f°"
-            args: [ 'x', 'id(printer_nozzle_target).state' ]
+            args: [ 'x', 'id(a1mini_nozzle_target).state' ]
+
+  - platform: homeassistant
+    entity_id: sensor.a1mini_0309da532001059_doeltemperatuur_nozzle
+    id: a1mini_nozzle_target
+    on_value:
+      - lvgl.label.update:
+          id: a1mini_nozzle_label
+          text:
+            format: "%.0f° / %.0f°"
+            args: [ 'id(a1mini_nozzle_current).state', 'x' ]
+
+  - platform: homeassistant
+    entity_id: sensor.a1mini_0309da532001059_bedtemperatuur
+    id: a1mini_bed_current
+    on_value:
+      - lvgl.label.update:
+          id: a1mini_bed_label
+          text:
+            format: "%.0f° / %.0f°"
+            args: [ 'x', 'id(a1mini_bed_target).state' ]
+
+  - platform: homeassistant
+    entity_id: sensor.a1mini_0309da532001059_doeltemperatuur_bed
+    id: a1mini_bed_target
+    on_value:
+      - lvgl.label.update:
+          id: a1mini_bed_label
+          text:
+            format: "%.0f° / %.0f°"
+            args: [ 'id(a1mini_bed_current).state', 'x' ]
+
+  - platform: homeassistant
+    entity_id: sensor.a1mini_0309da532001059_huidige_laag
+    id: a1mini_current_layer
+    on_value:
+      - lvgl.label.update:
+          id: a1mini_layer_label
+          text:
+            format: "%.0f / %.0f"
+            args: [ 'x', 'id(a1mini_total_layers).state' ]
+
+  - platform: homeassistant
+    entity_id: sensor.a1mini_0309da532001059_hoeveelheid_lagen
+    id: a1mini_total_layers
+    on_value:
+      - lvgl.label.update:
+          id: a1mini_layer_label
+          text:
+            format: "%.0f / %.0f"
+            args: [ 'id(a1mini_current_layer).state', 'x' ]
+
+  # ========================= A1 (03919D533008224) ===========================
+  - platform: homeassistant
+    entity_id: sensor.a1_03919d533008224_printvoortgang
+    id: a1_progress
+    on_value:
+      - lvgl.label.update:
+          id: a1_progress_label
+          text:
+            format: "%.0f%%"
+            args: [ 'x' ]
+
+  - platform: homeassistant
+    entity_id: sensor.a1_03919d533008224_resterende_tijd
+    id: a1_remaining
+    on_value:
+      - lvgl.label.update:
+          id: a1_remaining_label
+          text:
+            format: "%dh %02dm"
+            args: [ '(int)x', '(int)round((x - (int)x) * 60)' ]
+
+  - platform: homeassistant
+    entity_id: sensor.a1_03919d533008224_nozzle_temperatuur
+    id: a1_nozzle_current
+    on_value:
+      - lvgl.label.update:
+          id: a1_nozzle_label
+          text:
+            format: "%.0f° / %.0f°"
+            args: [ 'x', 'id(a1_nozzle_target).state' ]
 
   - platform: homeassistant
     entity_id: sensor.a1_03919d533008224_doeltemperatuur_nozzle
-    id: printer_nozzle_target
+    id: a1_nozzle_target
     on_value:
       - lvgl.label.update:
-          id: printer_nozzle_label
+          id: a1_nozzle_label
           text:
             format: "%.0f° / %.0f°"
-            args: [ 'id(printer_nozzle_current).state', 'x' ]
+            args: [ 'id(a1_nozzle_current).state', 'x' ]
 
-  # Bed temperature - current / target combined into one label
   - platform: homeassistant
     entity_id: sensor.a1_03919d533008224_bedtemperatuur
-    id: printer_bed_current
+    id: a1_bed_current
     on_value:
       - lvgl.label.update:
-          id: printer_bed_label
+          id: a1_bed_label
           text:
             format: "%.0f° / %.0f°"
-            args: [ 'x', 'id(printer_bed_target).state' ]
+            args: [ 'x', 'id(a1_bed_target).state' ]
 
   - platform: homeassistant
     entity_id: sensor.a1_03919d533008224_doeltemperatuur_bed
-    id: printer_bed_target
+    id: a1_bed_target
     on_value:
       - lvgl.label.update:
-          id: printer_bed_label
+          id: a1_bed_label
           text:
             format: "%.0f° / %.0f°"
-            args: [ 'id(printer_bed_current).state', 'x' ]
+            args: [ 'id(a1_bed_current).state', 'x' ]
 
-  # Layer - current / total layers combined into one label
   - platform: homeassistant
     entity_id: sensor.a1_03919d533008224_huidige_laag
-    id: printer_current_layer
+    id: a1_current_layer
     on_value:
       - lvgl.label.update:
-          id: printer_layer_label
+          id: a1_layer_label
           text:
             format: "%.0f / %.0f"
-            args: [ 'x', 'id(printer_total_layers).state' ]
+            args: [ 'x', 'id(a1_total_layers).state' ]
 
   - platform: homeassistant
     entity_id: sensor.a1_03919d533008224_hoeveelheid_lagen
-    id: printer_total_layers
+    id: a1_total_layers
     on_value:
       - lvgl.label.update:
-          id: printer_layer_label
+          id: a1_layer_label
           text:
             format: "%.0f / %.0f"
-            args: [ 'id(printer_current_layer).state', 'x' ]
+            args: [ 'id(a1_current_layer).state', 'x' ]
 
 
 text_sensor:
 
+  # ---- A1 Mini text fields ----
   - platform: homeassistant
-    entity_id: sensor.a1_03919d533008224_printstatus
-    id: printer_status
+    entity_id: sensor.a1mini_0309da532001059_printstatus
+    id: a1mini_status
     on_value:
       - lvgl.label.update:
-          id: printer_status_label
+          id: a1mini_status_label
+          text: !lambda return x.c_str();
+
+  - platform: homeassistant
+    entity_id: sensor.a1mini_0309da532001059_huidige_fase
+    id: a1mini_phase
+    on_value:
+      - lvgl.label.update:
+          id: a1mini_phase_label
+          text: !lambda return x.c_str();
+
+  - platform: homeassistant
+    entity_id: sensor.a1mini_0309da532001059_taaknaam
+    id: a1mini_job_name
+    on_value:
+      - lvgl.label.update:
+          id: a1mini_job_label
+          text: !lambda return x.c_str();
+
+  # A1 Mini finish time - UTC ISO8601, shifted +2h for Amsterdam summer
+  # time (CEST). NOTE: switch to +1 once NL moves to winter time (CET).
+  - platform: homeassistant
+    entity_id: sensor.a1mini_0309da532001059_eindtijd
+    id: a1mini_finish_time
+    on_value:
+      - lvgl.label.update:
+          id: a1mini_finish_label
+          text: !lambda |-
+            std::string iso = x;
+            if (iso.length() < 16) return std::string("--:--");
+            int hour = atoi(iso.substr(11, 2).c_str());
+            int minute = atoi(iso.substr(14, 2).c_str());
+            hour = (hour + 2) % 24;
+            char buf[8];
+            snprintf(buf, sizeof(buf), "%02d:%02d", hour, minute);
+            return std::string(buf);
+
+  # ---- A1 text fields ----
+  - platform: homeassistant
+    entity_id: sensor.a1_03919d533008224_printstatus
+    id: a1_status
+    on_value:
+      - lvgl.label.update:
+          id: a1_status_label
           text: !lambda return x.c_str();
 
   - platform: homeassistant
     entity_id: sensor.a1_03919d533008224_huidige_fase
-    id: printer_phase
+    id: a1_phase
     on_value:
       - lvgl.label.update:
-          id: printer_phase_label
+          id: a1_phase_label
           text: !lambda return x.c_str();
 
   - platform: homeassistant
     entity_id: sensor.a1_03919d533008224_taaknaam
-    id: printer_job_name
+    id: a1_job_name
     on_value:
       - lvgl.label.update:
-          id: printer_job_label
+          id: a1_job_label
           text: !lambda return x.c_str();
 
-  # Estimated finish time - sensor reports a UTC ISO8601 timestamp.
-  # Parses HH:MM and shifts +2h for Amsterdam summer time (CEST).
-  # NOTE: switch this to +1 once the Netherlands moves to winter time (CET).
+  # A1 finish time - same UTC->CEST conversion as A1 Mini above
   - platform: homeassistant
     entity_id: sensor.a1_03919d533008224_eindtijd
-    id: printer_finish_time
+    id: a1_finish_time
     on_value:
       - lvgl.label.update:
-          id: printer_finish_label
+          id: a1_finish_label
           text: !lambda |-
             std::string iso = x;
             if (iso.length() < 16) return std::string("--:--");
@@ -214,15 +336,17 @@ binary_sensor:
             checked: !lambda return x;
 
   # ---------------------------------------------------------------------
-  # 3D PRINTER SOCKET - highlights when the smart plug is on
+  # A1 SOCKET - highlights when its smart plug is on (entity_id still
+  # says "a1_mini" but the plug now actually powers the A1). The A1 Mini
+  # has no smart plug, so it has no equivalent power-toggle sensor.
   # ---------------------------------------------------------------------
   - platform: homeassistant
-    id: printer_socket_state
-    entity_id: switch.bambulab_a1_mini_stopcontact_1
+    id: a1_socket_state
+    entity_id: switch.bambulab_a1_stopcontact_1
     trigger_on_initial_state: true
     on_state:
       then:
         lvgl.widget.update:
-          id: printer_button
+          id: a1_button
           state:
             checked: !lambda return x;
