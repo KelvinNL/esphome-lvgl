@@ -185,7 +185,7 @@ binary_sensor:
   # ---------------------------------------------------------------------
   - platform: homeassistant
     id: printer_socket_state
-    entity_id: switch.bambulab_a1_mini_stopcontact_1
+    entity_id: switch.bambulab_a1_stopcontact_1
     trigger_on_initial_state: true
     on_state:
       then:
