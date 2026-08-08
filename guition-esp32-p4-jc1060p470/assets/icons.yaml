@@ -24,6 +24,14 @@ font:
       "\U000F050F",  # mdi-thermometer
       ]
 
+  - file: 'https://github.com/Templarian/MaterialDesign-Webfont/raw/v7.4.47/fonts/materialdesignicons-webfont.ttf'
+    id: icon_font_small
+    size: 24
+    bpp: 8
+    glyphs: [
+      "\U000F050F",  # mdi-thermometer
+      ]
+
 # Map icons to names
 substitutions:
   lightbulb:      "\U000F0335"
