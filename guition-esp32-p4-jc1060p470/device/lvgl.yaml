@@ -664,7 +664,7 @@ lvgl:
                   id: a1mini_phase_label
                   text: "--"
 
-                - button:
+        - button:
             checkable: false
             id: printers_back_button
             styles: control
