@@ -3,11 +3,12 @@
 # =============================================================================
 # 5x4 grid, two pages.
 #
-# PAGE 1 (main_page) - same room/scene buttons as the Woonkamer panel:
-#   Row 0: Woonkamer / Slaapkamer / Computerkamer "on" buttons, TV kijken,
-#          TV in bed
+# PAGE 1 (main_page):
+#   Row 0: Woonkamer / Slaapkamer / Computerkamer "on" buttons
 #   Row 1: matching "Uit" buttons (plain, no highlight)
-#   Row 3: More -> page 2 (bottom-right, same spot as the Woonkamer panel)
+#   Row 2: TV kijken, TV in bed, Ambience Lighting (opens a popup with
+#          color choices - Paars/Rood/Groen - like a bubble-card selector)
+#   Row 3: More -> page 2 (bottom-right)
 #
 # PAGE 2 (printers_page) - both printers side by side:
 #   Row 0-1: A1 Mini (power toggle, status, job, remaining, finished,
@@ -37,6 +38,62 @@ lvgl:
           y: 4
           text_align: center
           text_color: 0xFFFFFF
+
+  msgboxes:
+    - id: ambience_msgbox
+      title: "Ambience Lighting"
+      body: "Kies een sfeer voor de Computerkamer"
+      close_button: true
+      buttons:
+        - text: "Bandos GWD"
+          on_click:
+            - homeassistant.service:
+                service: scene.turn_on
+                data:
+                  entity_id: scene.bandos_gwd
+            - lvgl.msgbox.close: ambience_msgbox
+        - text: "Chambers of Xeric"
+          on_click:
+            - homeassistant.service:
+                service: scene.turn_on
+                data:
+                  entity_id: scene.chambers_of_xeric
+            - lvgl.msgbox.close: ambience_msgbox
+        - text: "Corrupted Gauntlet"
+          on_click:
+            - homeassistant.service:
+                service: scene.turn_on
+                data:
+                  entity_id: scene.corrupted_gauntlet
+            - lvgl.msgbox.close: ambience_msgbox
+        - text: "Hueycoatl"
+          on_click:
+            - homeassistant.service:
+                service: scene.turn_on
+                data:
+                  entity_id: scene.hueycoatl
+            - lvgl.msgbox.close: ambience_msgbox
+        - text: "Royal Titans"
+          on_click:
+            - homeassistant.service:
+                service: scene.turn_on
+                data:
+                  entity_id: scene.royal_titans
+            - lvgl.msgbox.close: ambience_msgbox
+        - text: "Tombs of Amascut"
+          on_click:
+            - homeassistant.service:
+                service: scene.turn_on
+                data:
+                  entity_id: scene.tombs_of_amascut
+            - lvgl.msgbox.close: ambience_msgbox
+        - text: "Zamorak GWD"
+          on_click:
+            - homeassistant.service:
+                service: scene.turn_on
+                data:
+                  entity_id: scene.zamorak_gwd
+            - lvgl.msgbox.close: ambience_msgbox
 
   pages:
 
@@ -123,48 +180,6 @@ lvgl:
                   data:
                     entity_id: scene.lampen_computerkamer
 
-        - button:
-            checkable: true
-            id: tv_ambient_button
-            styles: control
-            grid_cell_column_pos: 3
-            grid_cell_row_pos: 0
-            widgets:
-              - label:
-                  text_font: $icon_font
-                  align: center
-                  y: -20
-                  text: $ledstrip
-              - label:
-                  align: bottom_mid
-                  text: "TV kijken"
-            on_press:
-              - homeassistant.service:
-                  service: scene.turn_on
-                  data:
-                    entity_id: scene.ambient_lighting_voor_tv_kijken
-
-        - button:
-            checkable: true
-            id: tv_bed_button
-            styles: control
-            grid_cell_column_pos: 4
-            grid_cell_row_pos: 0
-            widgets:
-              - label:
-                  text_font: $icon_font
-                  align: center
-                  y: -20
-                  text: $ledstrip
-              - label:
-                  align: bottom_mid
-                  text: "TV in bed"
-            on_press:
-              - homeassistant.service:
-                  service: scene.turn_on
-                  data:
-                    entity_id: scene.tv_kijken_in_bed
-
         # ------------------- ROW 1: "Uit" buttons -----------------------
         - button:
             checkable: false
@@ -225,6 +240,67 @@ lvgl:
                   service: scene.turn_on
                   data:
                     entity_id: scene.lampen_computerkamer_uit
+
+        # ------------------- ROW 2: TV + Ambience Lighting -----------------
+        - button:
+            checkable: true
+            id: tv_ambient_button
+            styles: control
+            grid_cell_column_pos: 0
+            grid_cell_row_pos: 2
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $ledstrip
+              - label:
+                  align: bottom_mid
+                  text: "TV kijken"
+            on_press:
+              - homeassistant.service:
+                  service: scene.turn_on
+                  data:
+                    entity_id: scene.ambient_lighting_voor_tv_kijken
+
+        - button:
+            checkable: true
+            id: tv_bed_button
+            styles: control
+            grid_cell_column_pos: 1
+            grid_cell_row_pos: 2
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $ledstrip
+              - label:
+                  align: bottom_mid
+                  text: "TV in bed"
+            on_press:
+              - homeassistant.service:
+                  service: scene.turn_on
+                  data:
+                    entity_id: scene.tv_kijken_in_bed
+
+        - button:
+            checkable: false
+            id: ambience_nav_button
+            styles: control
+            grid_cell_column_pos: 2
+            grid_cell_row_pos: 2
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $ledstrip
+              - label:
+                  align: bottom_mid
+                  text: "Ambience"
+            on_click:
+              - lvgl.msgbox.open: ambience_msgbox
 
         # ------------------- ROW 3: More -> page 2 ------------------------
         - button:
