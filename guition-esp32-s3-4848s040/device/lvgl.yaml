@@ -325,7 +325,7 @@ lvgl:
               - homeassistant.service:
                   service: switch.toggle
                   data:
-                    entity_id: switch.bambulab_a1_mini_stopcontact_1
+                    entity_id: switch.bambulab_a1_stopcontact_1
 
         - button:
             height: $button_height_single
