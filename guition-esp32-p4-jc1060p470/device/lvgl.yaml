@@ -703,6 +703,10 @@ lvgl:
                   align: bottom_mid
                   text: "Auto Uit"
             on_press:
+              - lvgl.widget.update:
+                  id: a1_auto_shutdown_button
+                  state:
+                    checked: !lambda return !id(a1_auto_shutdown_state).state;
               - homeassistant.service:
                   service: input_boolean.toggle
                   data:
