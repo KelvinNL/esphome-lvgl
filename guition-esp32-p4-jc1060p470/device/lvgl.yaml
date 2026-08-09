@@ -687,6 +687,27 @@ lvgl:
                   id: a1_phase_label
                   text: "--"
 
+        - button:
+            checkable: true
+            id: a1_auto_shutdown_button
+            styles: control
+            grid_cell_column_pos: 4
+            grid_cell_row_pos: 1
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $power_plug_off_outline
+              - label:
+                  align: bottom_mid
+                  text: "Auto Uit"
+            on_press:
+              - homeassistant.service:
+                  service: input_boolean.toggle
+                  data:
+                    entity_id: input_boolean.printer_automatisch_uit_na_print
+
 # ------------------- ROW 2: A1 MINI (status-only, no plug) --------
         - button:
             clickable: false
