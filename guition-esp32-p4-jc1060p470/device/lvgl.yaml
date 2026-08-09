@@ -688,7 +688,7 @@ lvgl:
                   text: "--"
 
         - button:
-            checkable: true
+            checkable: false
             id: a1_auto_shutdown_button
             styles: control
             grid_cell_column_pos: 4
