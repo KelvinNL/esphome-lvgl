@@ -32,6 +32,7 @@ font:
       "\U000F0618",  # mdi-bridge
       "\U000F09F1",  # mdi-flower-tulip
       "\U000F0031",  # mdi-anchor (substitute for pirate)
+      "\U000F1424",  # mdi-power-plug-off-outline
       ]
 
   - file: 'https://github.com/Templarian/MaterialDesign-Webfont/raw/v7.4.47/fonts/materialdesignicons-webfont.ttf'
@@ -69,3 +70,4 @@ substitutions:
   bridge:         "\U000F0618"
   flower_tulip:   "\U000F09F1"
   anchor:         "\U000F0031"
+  power_plug_off_outline: "\U000F1424"
