@@ -84,7 +84,12 @@ lvgl:
                 grid_cell_row_pos: 0
                 widgets:
                   - label:
+                      text_font: $icon_font
                       align: center
+                      y: -20
+                      text: $shield_sword
+                  - label:
+                      align: bottom_mid
                       text: "Bandos GWD"
                 on_click:
                   - homeassistant.service:
@@ -98,7 +103,12 @@ lvgl:
                 grid_cell_row_pos: 0
                 widgets:
                   - label:
+                      text_font: $icon_font
                       align: center
+                      y: -20
+                      text: $castle
+                  - label:
+                      align: bottom_mid
                       text: "Chambers of Xeric"
                 on_click:
                   - homeassistant.service:
@@ -112,7 +122,12 @@ lvgl:
                 grid_cell_row_pos: 0
                 widgets:
                   - label:
+                      text_font: $icon_font
                       align: center
+                      y: -20
+                      text: $skull_crossbones
+                  - label:
+                      align: bottom_mid
                       text: "Corrupted Gauntlet"
                 on_click:
                   - homeassistant.service:
@@ -126,7 +141,12 @@ lvgl:
                 grid_cell_row_pos: 0
                 widgets:
                   - label:
+                      text_font: $icon_font
                       align: center
+                      y: -20
+                      text: $snake
+                  - label:
+                      align: bottom_mid
                       text: "Hueycoatl"
                 on_click:
                   - homeassistant.service:
@@ -140,7 +160,12 @@ lvgl:
                 grid_cell_row_pos: 0
                 widgets:
                   - label:
+                      text_font: $icon_font
                       align: center
+                      y: -20
+                      text: $sword_cross
+                  - label:
+                      align: bottom_mid
                       text: "Royal Titans"
                 on_click:
                   - homeassistant.service:
@@ -154,7 +179,12 @@ lvgl:
                 grid_cell_row_pos: 1
                 widgets:
                   - label:
+                      text_font: $icon_font
                       align: center
+                      y: -20
+                      text: $grave_stone
+                  - label:
+                      align: bottom_mid
                       text: "Tombs of Amascut"
                 on_click:
                   - homeassistant.service:
@@ -168,7 +198,12 @@ lvgl:
                 grid_cell_row_pos: 1
                 widgets:
                   - label:
+                      text_font: $icon_font
                       align: center
+                      y: -20
+                      text: $fire
+                  - label:
+                      align: bottom_mid
                       text: "Zamorak GWD"
                 on_click:
                   - homeassistant.service:
@@ -182,7 +217,12 @@ lvgl:
                 grid_cell_row_pos: 1
                 widgets:
                   - label:
+                      text_font: $icon_font
                       align: center
+                      y: -20
+                      text: $bridge
+                  - label:
+                      align: bottom_mid
                       text: "Howling Abyss"
                 on_click:
                   - homeassistant.service:
@@ -196,7 +236,12 @@ lvgl:
                 grid_cell_row_pos: 1
                 widgets:
                   - label:
+                      text_font: $icon_font
                       align: center
+                      y: -20
+                      text: $flower_tulip
+                  - label:
+                      align: bottom_mid
                       text: "Koeshin's Crossing"
                 on_click:
                   - homeassistant.service:
@@ -210,7 +255,12 @@ lvgl:
                 grid_cell_row_pos: 1
                 widgets:
                   - label:
+                      text_font: $icon_font
                       align: center
+                      y: -20
+                      text: $anchor
+                  - label:
+                      align: bottom_mid
                       text: "Butcher's Bridge"
                 on_click:
                   - homeassistant.service:
