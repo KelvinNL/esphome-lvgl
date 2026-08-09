@@ -701,7 +701,7 @@ lvgl:
                   text: $power_plug_off_outline
               - label:
                   align: bottom_mid
-                  text: "Auto Uit"
+                  text: "Auto Shutdown"
             on_press:
               - lvgl.widget.update:
                   id: a1_auto_shutdown_button
