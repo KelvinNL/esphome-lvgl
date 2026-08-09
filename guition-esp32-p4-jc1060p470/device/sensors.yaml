@@ -372,3 +372,17 @@ binary_sensor:
           id: a1_button
           state:
             checked: !lambda return x;
+
+  # ---------------------------------------------------------------------
+  # AUTO SHUTDOWN AFTER PRINT - highlights when the helper is on
+  # ---------------------------------------------------------------------
+  - platform: homeassistant
+    id: a1_auto_shutdown_state
+    entity_id: input_boolean.printer_automatisch_uit_na_print
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: a1_auto_shutdown_button
+          state:
+            checked: !lambda return x;
