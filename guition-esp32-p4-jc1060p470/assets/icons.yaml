@@ -22,6 +22,16 @@ font:
       "\U000F09EE",  # mdi-file-document-outline
       "\U000F02BC",  # mdi-layers-outline
       "\U000F050F",  # mdi-thermometer
+      "\U000F18BE",  # mdi-shield-sword
+      "\U000F011A",  # mdi-castle
+      "\U000F0BC6",  # mdi-skull-crossbones
+      "\U000F150E",  # mdi-snake
+      "\U000F0787",  # mdi-sword-cross
+      "\U000F0BA2",  # mdi-grave-stone (substitute for pyramid)
+      "\U000F0238",  # mdi-fire
+      "\U000F0618",  # mdi-bridge
+      "\U000F09F1",  # mdi-flower-tulip
+      "\U000F0031",  # mdi-anchor (substitute for pirate)
       ]
 
   - file: 'https://github.com/Templarian/MaterialDesign-Webfont/raw/v7.4.47/fonts/materialdesignicons-webfont.ttf'
@@ -49,3 +59,13 @@ substitutions:
   file_document_outline: "\U000F09EE"
   layers_outline: "\U000F02BC"
   thermometer:    "\U000F050F"
+  shield_sword:   "\U000F18BE"
+  castle:         "\U000F011A"
+  skull_crossbones: "\U000F0BC6"
+  snake:          "\U000F150E"
+  sword_cross:    "\U000F0787"
+  grave_stone:    "\U000F0BA2"
+  fire:           "\U000F0238"
+  bridge:         "\U000F0618"
+  flower_tulip:   "\U000F09F1"
+  anchor:         "\U000F0031"
