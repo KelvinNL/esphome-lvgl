@@ -556,7 +556,7 @@ lvgl:
                     entity_id: light.l_battletron_gaming_light_bar_2024
 
         - button:
-            checkable: true
+            checkable: false
             id: govee_lightbars_button
             styles: control
             grid_cell_column_pos: 4
