@@ -597,6 +597,22 @@ lvgl:
                   data:
                     entity_id: light.battletron_gaming_desk_strip
 
+        - button:
+            clickable: false
+            styles: webhook
+            grid_cell_column_pos: 4
+            grid_cell_row_pos: 2
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $flag_checkered
+              - label:
+                  id: race_countdown_label
+                  align: bottom_mid
+                  text: "--"
+
         # ------------------- ROW 3: 4 individual weather tiles -------------
         - button:
             clickable: false
