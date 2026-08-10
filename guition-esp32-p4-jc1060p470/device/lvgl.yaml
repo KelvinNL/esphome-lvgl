@@ -42,6 +42,15 @@ lvgl:
           text_color: 0xFFFFFF
 
       - label:
+          text: "-- ------- ----"
+          id: date_label
+          text_font: clockbar_font
+          align: top_right
+          x: -8
+          y: 4
+          text_color: 0xFFFFFF
+
+      - label:
           text_font: icon_font_small
           text: $thermometer
           align: top_left
