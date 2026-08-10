@@ -32,6 +32,34 @@ sensor:
           text:
             format: "%.1f° / %.1f°"
             args: [ 'id(computerkamer_temperature).state', 'x' ]
+      - lvgl.label.update:
+          id: weather_big_temp_label
+          text:
+            format: "%.0f°"
+            args: [ 'x' ]
+
+  # --- Big weather tile (page 1) ---
+  - platform: homeassistant
+    entity_id: weather.forecast_thuis
+    attribute: humidity
+    id: weather_humidity
+    on_value:
+      - lvgl.label.update:
+          id: weather_humidity_label
+          text:
+            format: "%.0f%% humidity"
+            args: [ 'x' ]
+
+  - platform: homeassistant
+    entity_id: weather.forecast_thuis
+    attribute: wind_speed
+    id: weather_wind
+    on_value:
+      - lvgl.label.update:
+          id: weather_wind_label
+          text:
+            format: "%.0f km/h wind"
+            args: [ 'x' ]
 
   # ===================== A1 MINI (0309DA532001059) =========================
   - platform: homeassistant
@@ -197,6 +225,15 @@ sensor:
 
 
 text_sensor:
+
+  # --- Big weather tile (page 1) - condition text, e.g. "partlycloudy" ---
+  - platform: homeassistant
+    entity_id: weather.forecast_thuis
+    id: weather_condition
+    on_value:
+      - lvgl.label.update:
+          id: weather_condition_label
+          text: !lambda return x.c_str();
 
   # ---- A1 Mini text fields ----
   - platform: homeassistant
@@ -384,5 +421,63 @@ binary_sensor:
       then:
         lvgl.widget.update:
           id: a1_auto_shutdown_button
+          state:
+            checked: !lambda return x;
+
+  # ---------------------------------------------------------------------
+  # COMPUTERKAMER LAMPS (page 1, right side 2x3 grid)
+  # ---------------------------------------------------------------------
+  - platform: homeassistant
+    id: plafondlamp_state
+    entity_id: light.plafondlampen_computerkamer
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: plafondlamp_button
+          state:
+            checked: !lambda return x;
+
+  - platform: homeassistant
+    id: plank_lamp_state
+    entity_id: light.393d0976_8033_4897_a389_633158737c15_1
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: plank_lamp_button
+          state:
+            checked: !lambda return x;
+
+  - platform: homeassistant
+    id: monitor_lightbar_state
+    entity_id: light.l_battletron_gaming_light_bar_2024
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: monitor_lightbar_button
+          state:
+            checked: !lambda return x;
+
+  - platform: homeassistant
+    id: led_strip_state
+    entity_id: light.battletron_gaming_desk_strip
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: led_strip_button
+          state:
+            checked: !lambda return x;
+
+  - platform: homeassistant
+    id: govee_lightbars_state
+    entity_id: light.h6046
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: govee_lightbars_button
           state:
             checked: !lambda return x;
