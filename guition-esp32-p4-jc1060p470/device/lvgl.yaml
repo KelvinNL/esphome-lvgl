@@ -491,6 +491,177 @@ lvgl:
             on_click:
               - lvgl.widget.show: ambience_overlay
 
+        # ------------------- RIGHT SIDE: 2x3 grid of Computerkamer lamps ---
+        - button:
+            checkable: true
+            id: plafondlamp_button
+            styles: control
+            grid_cell_column_pos: 3
+            grid_cell_row_pos: 0
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $lightbulb
+              - label:
+                  align: bottom_mid
+                  text: "Plafondlamp"
+            on_press:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: light.plafondlampen_computerkamer
+
+        - button:
+            checkable: true
+            id: plank_lamp_button
+            styles: control
+            grid_cell_column_pos: 4
+            grid_cell_row_pos: 0
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $lightbulb
+              - label:
+                  align: bottom_mid
+                  text: "Plank Lamp"
+            on_press:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: light.393d0976_8033_4897_a389_633158737c15_1
+
+        - button:
+            checkable: true
+            id: monitor_lightbar_button
+            styles: control
+            grid_cell_column_pos: 3
+            grid_cell_row_pos: 1
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $ledstrip
+              - label:
+                  align: bottom_mid
+                  text: "Light Bar Monitor"
+            on_press:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: light.l_battletron_gaming_light_bar_2024
+
+        - button:
+            checkable: true
+            id: govee_lightbars_button
+            styles: control
+            grid_cell_column_pos: 4
+            grid_cell_row_pos: 1
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $lightbulb
+              - label:
+                  align: bottom_mid
+                  text: "Govee Light Bars"
+            on_press:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: light.h6046
+
+        - button:
+            checkable: true
+            id: led_strip_button
+            styles: control
+            grid_cell_column_pos: 3
+            grid_cell_row_pos: 2
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $ledstrip
+              - label:
+                  align: bottom_mid
+                  text: "LED Strip"
+            on_press:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: light.battletron_gaming_desk_strip
+
+        # ------------------- ROW 3: 4 individual weather tiles -------------
+        - button:
+            clickable: false
+            styles: webhook
+            grid_cell_column_pos: 0
+            grid_cell_row_pos: 3
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $weather_partly_cloudy
+              - label:
+                  id: weather_condition_label
+                  align: bottom_mid
+                  text: "--"
+
+        - button:
+            clickable: false
+            styles: webhook
+            grid_cell_column_pos: 1
+            grid_cell_row_pos: 3
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $thermometer
+              - label:
+                  id: weather_big_temp_label
+                  align: bottom_mid
+                  text: "--°"
+
+        - button:
+            clickable: false
+            styles: webhook
+            grid_cell_column_pos: 2
+            grid_cell_row_pos: 3
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $water_percent
+              - label:
+                  id: weather_humidity_label
+                  align: bottom_mid
+                  text: "--% humidity"
+
+        - button:
+            clickable: false
+            styles: webhook
+            grid_cell_column_pos: 3
+            grid_cell_row_pos: 3
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: center
+                  y: -20
+                  text: $weather_windy
+              - label:
+                  id: weather_wind_label
+                  align: bottom_mid
+                  text: "-- km/h wind"
+
         # ------------------- ROW 3: More -> page 2 ------------------------
         - button:
             checkable: false
