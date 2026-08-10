@@ -9,11 +9,13 @@ time:
      - 2.pool.ntp.org
     on_time_sync:
       - script.execute: time_update
+      - script.execute: race_countdown_update
     on_time:
       - minutes: '*'
         seconds: 0
         then:
           - script.execute: time_update
+          - script.execute: race_countdown_update
 
 # Clock
 script:
@@ -26,3 +28,26 @@ script:
             auto now = id(sntp_time).now();
             snprintf(time_buf, sizeof(time_buf), "%02d:%02d", now.hour, now.minute);
             return time_buf;
+
+  # Race countdown - parses the "Next F1 Race" datetime from Home Assistant
+  # (input_datetime.next_f1_race, updated manually by Kelvin each week) and
+  # shows the time remaining until it.
+  - id: race_countdown_update
+    then:
+      - lambda: |-
+          auto now = id(sntp_time).now();
+          if (!now.is_valid()) return;
+
+          ESPTime target;
+          if (!ESPTime::strptime(id(next_race_raw).state, "%Y-%m-%d %H:%M:%S", target)) return;
+          target.recalc_timestamp_local();
+
+          static char buf[24];
+          if (target.timestamp <= now.timestamp) {
+            snprintf(buf, sizeof(buf), "Race day!");
+          } else {
+            uint32_t diff = target.timestamp - now.timestamp;
+            uint32_t days = diff / 86400;
+            snprintf(buf, sizeof(buf), "%u days", days);
+          }
+          id(race_countdown_label).update(buf);
