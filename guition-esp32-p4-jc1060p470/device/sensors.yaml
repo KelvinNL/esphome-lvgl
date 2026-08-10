@@ -46,9 +46,10 @@ sensor:
     on_value:
       - lvgl.label.update:
           id: weather_humidity_label
-          text:
-            format: "%.0f%% humidity"
-            args: [ 'x' ]
+          text: !lambda |-
+            char buf[24];
+            snprintf(buf, sizeof(buf), "%.0f%% humidity", x);
+            return std::string(buf);
 
   - platform: homeassistant
     entity_id: weather.forecast_thuis
