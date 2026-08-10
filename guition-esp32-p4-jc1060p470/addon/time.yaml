@@ -48,7 +48,7 @@ script:
 
           std::string raw = id(next_race_raw).state;
           int y = 0, mo = 0, d = 0, h = 0, mi = 0, s = 0;
-          if (sscanf(raw.c_str(), "%d-%d-%d %d:%d:%d", &y, &mo, &d, &h, &mi, &s) < 5) return;
+          if (sscanf(raw.c_str(), "%d-%d-%d %d:%d:%d", &y, &mo, &d, &h, &mi, &s) < 3) return;
 
           ESPTime target{};
           target.year = y;
