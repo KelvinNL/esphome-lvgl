@@ -36,6 +36,20 @@ script:
             auto now = id(sntp_time).now();
             snprintf(time_buf, sizeof(time_buf), "%02d:%02d", now.hour, now.minute);
             return time_buf;
+      - lvgl.label.update:
+          id: date_label
+          text: !lambda |-
+            static const char *dutch_months[] = {
+              "januari", "februari", "maart", "april", "mei", "juni",
+              "juli", "augustus", "september", "oktober", "november", "december"
+            };
+            static char date_buf[32];
+            auto now = id(sntp_time).now();
+            int month_index = now.month - 1;
+            if (month_index < 0 || month_index > 11) month_index = 0;
+            snprintf(date_buf, sizeof(date_buf), "%d %s %d",
+                     now.day_of_month, dutch_months[month_index], now.year);
+            return date_buf;
 
   # Race countdown - parses the "Next F1 Race" datetime from Home Assistant
   # (input_datetime.next_f1_race, updated manually by Kelvin each week) and
