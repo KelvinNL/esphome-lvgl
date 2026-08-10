@@ -33,6 +33,9 @@ font:
       "\U000F09F1",  # mdi-flower-tulip
       "\U000F0031",  # mdi-anchor (substitute for pirate)
       "\U000F1424",  # mdi-power-plug-off-outline
+      "\U000F0595",  # mdi-weather-partly-cloudy
+      "\U000F058E",  # mdi-water-percent
+      "\U000F059D",  # mdi-weather-windy
       ]
 
   - file: 'https://github.com/Templarian/MaterialDesign-Webfont/raw/v7.4.47/fonts/materialdesignicons-webfont.ttf'
@@ -71,3 +74,6 @@ substitutions:
   flower_tulip:   "\U000F09F1"
   anchor:         "\U000F0031"
   power_plug_off_outline: "\U000F1424"
+  weather_partly_cloudy: "\U000F0595"
+  water_percent:  "\U000F058E"
+  weather_windy:  "\U000F059D"
