@@ -36,6 +36,7 @@ font:
       "\U000F0595",  # mdi-weather-partly-cloudy
       "\U000F058E",  # mdi-water-percent
       "\U000F059D",  # mdi-weather-windy
+      "\U000F023C",  # mdi-flag-checkered
       ]
 
   - file: 'https://github.com/Templarian/MaterialDesign-Webfont/raw/v7.4.47/fonts/materialdesignicons-webfont.ttf'
@@ -77,3 +78,4 @@ substitutions:
   weather_partly_cloudy: "\U000F0595"
   water_percent:  "\U000F058E"
   weather_windy:  "\U000F059D"
+  flag_checkered: "\U000F023C"
