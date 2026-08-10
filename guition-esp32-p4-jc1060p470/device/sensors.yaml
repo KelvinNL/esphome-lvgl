@@ -235,6 +235,14 @@ text_sensor:
           id: weather_condition_label
           text: !lambda return x.c_str();
 
+  # --- Next F1 Race countdown (page 1) - raw datetime from the helper,
+  # parsed and formatted by the race_countdown_update script in time.yaml
+  - platform: homeassistant
+    entity_id: input_datetime.next_f1_race
+    id: next_race_raw
+    on_value:
+      - script.execute: race_countdown_update
+
   # ---- A1 Mini text fields ----
   - platform: homeassistant
     entity_id: sensor.a1mini_0309da532001059_printstatus
