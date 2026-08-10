@@ -35,7 +35,7 @@ sensor:
       - lvgl.label.update:
           id: weather_big_temp_label
           text:
-            format: "%.0f°"
+            format: "%.1f°"
             args: [ 'x' ]
 
   # --- Big weather tile (page 1) ---
